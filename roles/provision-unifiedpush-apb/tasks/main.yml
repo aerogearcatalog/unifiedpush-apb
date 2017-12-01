@@ -1,8 +1,152 @@
-- name: "Create Push DB"
-  shell: "oc new-app openshift/mysql-55-centos7 --name=mysql -e MYSQL_USER={{ MYSQL_USER }} -e MYSQL_PASSWORD={{ MYSQL_PASSWORD }} -e MYSQL_DATABASE={{ MYSQL_DATABASE }}"
+- name: MySQL PVC
+  k8s_v1_persistent_volume_claim:
+    name: mysql
+    namespace: "{{ namespace }}"
+    labels:
+      app: mysql
+      service: mysql
+    access_modes:
+      - ReadWriteOnce
+    resources_requests:
+      storage: 10Gi
+    state: present
 
-- name: "Create UPS server"
-  shell: "oc new-app docker.io/aerogear/unifiedpush-wildfly:{{ ups_image_version }} --name=ups -e MYSQL_USER={{ MYSQL_USER }} -e MYSQL_PASSWORD={{ MYSQL_PASSWORD }} -e MYSQL_DATABASE={{ MYSQL_DATABASE }}"
+- name: MySQL deployment
+  openshift_v1_deployment_config:
+    name: mysql
+    namespace: "{{ namespace }}"
+    labels:
+      app: mysql
+      service: mysql
+    replicas: 1
+    selector:
+      app: mysql
+      service: mysql
+    spec_template_metadata_labels:
+      app: mysql
+      service: mysql
+    containers:
+    - name: mysql
+      image: docker.io/openshift/mysql-55-centos7
+      env:
+      - name: MYSQL_USER
+        value: "{{ MYSQL_USER }}"
+      - name: MYSQL_PASSWORD
+        value: "{{ MYSQL_PASSWORD }}"
+      - name: MYSQL_DATABASE
+        value: "{{ MYSQL_DATABASE }}"
+      ports:
+      - name: mysql
+        protocol: TCP
+        container_port: 3306
+      liveness_probe:
+        timeout_seconds: 1
+        inital_delay_seconds: 30
+        tcp_socket:
+          port: 3306
+      readiness_probe:
+        timeout_seconds: 1
+        initial_delay_seconds: 5
+        _exec:
+          command:
+          - "/bin/sh"
+          - "-i"
+          - "-c"
+          - "MYSQL_PWD=\"$MYSQL_PASSWORD\" mysql -h 127.0.0.1 -u $MYSQL_USER -D $MYSQL_DATABASE -e 'SELECT 1'"
+      volume_mounts:
+      - mount_path: /var/lib/mysql/data
+        name: mysql-data
+    volumes:
+    - name: mysql-data
+      persistent_volume_claim:
+        claim_name: mysql
+    triggers:
+    - type: ConfigChange
+    state: present
+
+- name: MySQL service
+  k8s_v1_service:
+    name: mysql
+    namespace: "{{ namespace }}"
+    labels:
+      app: mysql
+      service: mysql
+    selector:
+      app: mysql
+      service: mysql
+    ports:
+    - name: mysql
+      port: 3306
+      target_port: 3306
+    state: present
+  register: mysql_service
+
+- name: UPS deployment
+  openshift_v1_deployment_config:
+    name: ups
+    namespace: "{{ namespace }}"
+    labels:
+      app: ups
+      service: ups
+      name: ups
+      mobile: enabled
+    replicas: 1
+    selector:
+      app: ups
+      service: ups
+    spec_template_metadata_labels:
+      app: ups
+      service: ups
+    containers:
+    - name: ups
+      image: docker.io/aerogear/unifiedpush-wildfly:1.2.1.3
+      env:
+      - name: MYSQL_USER
+        value: "{{ MYSQL_USER }}"
+      - name: MYSQL_PASSWORD
+        value: "{{ MYSQL_PASSWORD }}"
+      - name: MYSQL_DATABASE
+        value: "{{ MYSQL_DATABASE }}"
+      ports:
+      - name: ups
+        protocol: TCP
+        container_port: 8080
+      readiness_probe:
+        timeout_seconds: 1
+        initial_delay_seconds: 5
+        _exec:
+          command:
+          - "/bin/sh"
+          - "-i"
+          - "-c"
+          - 'wget http://localhost:8080/ag-push '
+
+- name: create UPS service
+  k8s_v1_service:
+    name: ups
+    namespace: '{{ namespace }}'
+    labels:
+      app: ups
+      service: ups
+      mobile: enabled
+    selector:
+      app: ups
+      service: ups
+    ports:
+      - name: web
+        port: 80
+        target_port: 8080
+
+- name: create ups route
+  openshift_v1_route:
+    name: ups
+    namespace: '{{ namespace }}'
+    labels:
+      app: ups
+      service: ups
+      mobile: enabled
+    to_name: ups
+    spec_port_target_port: web
 
 - name: "Retrieve route to ups-server"
   shell: "oc get routes ups -n {{ namespace }} | grep -v NAME | awk '{print $2}'"

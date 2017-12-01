@@ -19,17 +19,17 @@ plans:
       required: True
       default: unifiedpush
       type: string
-      title: USP db username
+      title: UPS db username
     - name: MYSQL_PASSWORD
       required: True
       default: unifiedpush
       type: string
-      title: USP db password
+      title: UPS db password
     - name: MYSQL_DATABASE
       required: True
       default: unifiedpush
       type: string
-      title: USP database name
+      title: UPS database name
     bind_parameters:
     - name: service
       title: The service the client is for
