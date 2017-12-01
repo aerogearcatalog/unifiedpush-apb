@@ -1,0 +1,36 @@
+version: 1.0
+name: unifiedpush-apb
+description: AeroGear UnifiedPush Server
+bindable: True
+async: optional
+tags: 
+  - mobile-service
+metadata:
+  displayName: UnifiedPush Server
+  console.openshift.io/iconClass: fa fa-rocket
+  serviceName: ups
+plans:
+  - name: default
+    description: Deploy UPS
+    free: True
+    metadata: {}
+    parameters: 
+    - name: MYSQL_USER
+      required: True
+      default: unifiedpush
+      type: string
+      title: USP db username
+    - name: MYSQL_PASSWORD
+      required: True
+      default: unifiedpush
+      type: string
+      title: USP db password
+    - name: MYSQL_DATABASE
+      required: True
+      default: unifiedpush
+      type: string
+      title: USP database name
+    bind_parameters:
+    - name: service
+      title: The service the client is for
+      type: string

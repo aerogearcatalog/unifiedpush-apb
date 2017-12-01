@@ -1,0 +1,17 @@
+- name: "Create Push DB"
+  shell: "oc new-app openshift/mysql-55-centos7 --name=mysql -e MYSQL_USER={{ MYSQL_USER }} -e MYSQL_PASSWORD={{ MYSQL_PASSWORD }} -e MYSQL_DATABASE={{ MYSQL_DATABASE }}"
+
+- name: "Create UPS server"
+  shell: "oc new-app docker.io/aerogear/unifiedpush-wildfly:{{ ups_image_version }} --name=ups -e MYSQL_USER={{ MYSQL_USER }} -e MYSQL_PASSWORD={{ MYSQL_PASSWORD }} -e MYSQL_DATABASE={{ MYSQL_DATABASE }}"
+
+- name: "Retrieve route to ups-server"
+  shell: "oc get routes ups -n {{ namespace }} | grep -v NAME | awk '{print $2}'"
+  register: ups_route
+
+- name: "Create ups secret yaml file"
+  template:
+    src: secret.yml.j2
+    dest: /tmp/secret.yaml
+
+- name: "Create UPS secret"
+  shell: "oc create -f /tmp/secret.yaml -n {{ namespace }}"
