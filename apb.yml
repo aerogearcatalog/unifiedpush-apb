@@ -25,6 +25,11 @@ plans:
       default: unifiedpush
       type: string
       title: UPS db password
+    - name: MYSQL_ROOT_PASSWORD
+      required: True
+      default: supersecret
+      type: string
+      title: UPS db root password
     - name: MYSQL_DATABASE
       required: True
       default: unifiedpush
