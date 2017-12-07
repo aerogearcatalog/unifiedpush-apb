@@ -1,4 +1,4 @@
-# FH-Sync Server APB
+# FH UnifiedPush Server APB
 
 [![](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/feedhenry/unifiedpush-apb/)
 [![Docker Stars](https://img.shields.io/docker/stars/feedhenry/unifiedpush-apb.svg)](https://registry.hub.docker.com/v2/repositories/feedhenry/unifiedpush-apb/stars/count/)
