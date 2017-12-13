@@ -127,6 +127,8 @@
   k8s_v1_service:
     name: ups
     namespace: '{{ namespace }}'
+    annotations:
+      org.aerogear.metrics/plain_endpoint: "/ag-push/rest/prometheus/metrics"
     labels:
       app: ups
       service: ups
