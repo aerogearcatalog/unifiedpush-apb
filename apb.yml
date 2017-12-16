@@ -6,8 +6,10 @@ async: optional
 tags: 
   - mobile-service
 metadata:
-  displayName: UnifiedPush Server
-  console.openshift.io/iconClass: fa fa-rocket
+  displayName: AeroGear UPS
+  imageUrl: "https://pbs.twimg.com/profile_images/1794440005/aerogear_icon-1_400x400.png"
+  documentationUrl: "https://aerogear.org/push"
+  providerDisplayName: "Red Hat, Inc."
   serviceName: ups
 plans:
   - name: default
