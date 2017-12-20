@@ -27,7 +27,7 @@
       service: mysql
     containers:
     - name: mysql
-      image: docker.io/openshift/mysql-55-centos7
+      image: docker.io/openshift/mysql-{{ MYSQL_VERSION }}-centos7
       env:
       - name: MYSQL_USER
         value: "{{ MYSQL_USER }}"

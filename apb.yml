@@ -10,6 +10,7 @@ metadata:
   imageUrl: "https://pbs.twimg.com/profile_images/1794440005/aerogear_icon-1_400x400.png"
   documentationUrl: "https://aerogear.org/push"
   providerDisplayName: "Red Hat, Inc."
+  dependencies: ['MySQL:55']
   serviceName: ups
 plans:
   - name: default
@@ -37,6 +38,12 @@ plans:
       default: unifiedpush
       type: string
       title: UPS database name
+    - name: MYSQL_VERSION
+      required: True
+      default: "55"
+      enum: ['55', '56']
+      type: enum
+      title: MySQL version
     bind_parameters:
     - name: service
       title: The service the client is for
