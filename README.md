@@ -1,8 +1,8 @@
 # FH UnifiedPush Server APB
 
-[![](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/feedhenry/unifiedpush-apb/)
-[![Docker Stars](https://img.shields.io/docker/stars/feedhenry/unifiedpush-apb.svg)](https://registry.hub.docker.com/v2/repositories/feedhenry/unifiedpush-apb/stars/count/)
-[![Docker pulls](https://img.shields.io/docker/pulls/feedhenry/unifiedpush-apb.svg)](https://registry.hub.docker.com/v2/repositories/feedhenry/unifiedpush-apb/)
+[![](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/aerogearcatalog/unifiedpush-apb/)
+[![Docker Stars](https://img.shields.io/docker/stars/aerogearcatalog/unifiedpush-apb.svg)](https://registry.hub.docker.com/v2/repositories/aerogearcatalog/unifiedpush-apb/stars/count/)
+[![Docker pulls](https://img.shields.io/docker/pulls/aerogearcatalog/unifiedpush-apb.svg)](https://registry.hub.docker.com/v2/repositories/aerogearcatalog/unifiedpush-apb/)
 [![License](https://img.shields.io/:license-Apache2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Local Development

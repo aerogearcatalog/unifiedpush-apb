@@ -1,5 +1,5 @@
 DOCKERHOST = docker.io
-DOCKERORG = feedhenry
+DOCKERORG = aerogearcatalog
 IMAGENAME = unifiedpush-apb
 TAG = latest
 USER=$(shell id -u)
