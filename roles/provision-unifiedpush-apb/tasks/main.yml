@@ -1,3 +1,10 @@
+- name: Get the name of the service instance
+  shell: oc get serviceinstance --namespace={{ namespace }} -o jsonpath='{.items[?(@.spec.externalID=="{{ _apb_service_instance_id }}")].metadata.name}'
+  register: service_instance_name
+
+- name: Label the service instance with the service name
+  shell: oc label serviceinstance '{{ service_instance_name.stdout }}' serviceName=unifiedpush --namespace={{ namespace }}
+
 - name: MySQL PVC
   k8s_v1_persistent_volume_claim:
     name: mysql
