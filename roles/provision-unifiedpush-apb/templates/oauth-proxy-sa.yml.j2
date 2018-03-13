@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ proxy_serviceaccount_name }}
+  annotations:
+    serviceaccounts.openshift.io/oauth-redirectreference.ups: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"ups"}}'

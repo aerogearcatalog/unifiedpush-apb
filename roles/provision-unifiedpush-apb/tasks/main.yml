@@ -92,6 +92,14 @@
     state: present
   register: mysql_service
 
+- name: "Create OAuth Proxy Serviceaccount yaml"
+  template:
+    src: oauth-proxy-sa.yml.j2
+    dest: /tmp/oauth-proxy-sa.yaml
+
+- name: "Create OAuth Proxy Serviceaccount"
+  shell: "oc create -f /tmp/oauth-proxy-sa.yaml -n {{ namespace }}"
+
 - name: UPS deployment
   openshift_v1_deployment_config:
     name: ups
@@ -131,6 +139,22 @@
           - "-i"
           - "-c"
           - 'wget http://localhost:8080/ag-push '
+        containers:
+    - name: ups-oauth-proxy
+      image: '{{ proxy_image }}:{{ proxy_image_tag }}'
+      imagePullPolicy: IfNotPresent
+      ports:
+      - containerPort: '{{ ups_proxy_port }}'
+        name: public
+      args:
+      - --provider=openshift
+      - --openshift-service-account={{ proxy_serviceaccount_name }}
+      - --upstream=http://localhost:{{ ups_port }}
+      - >-
+        --openshift-sar={"namespace":"{{ namespace }}","resource":"deploymentconfigs","name":"ups","verb":"update"}
+      - --http-address=0.0.0.0:{{ ups_proxy_port }}
+      - --https-address=
+      - --cookie-secret=SECRET
 
 - name: create UPS service
   k8s_v1_service:
