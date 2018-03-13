@@ -119,7 +119,7 @@
     spec_template_spec_service_account_name: '{{ proxy_serviceaccount_name }}'
     containers:
     - name: ups
-      image: 'docker.io/aerogear/unifiedpush-wildfly:{{ ups_image_version }}'
+      image: 'docker.io/matzew/unifiedpush-wildfly-no-auth:{{ ups_image_version }}'
       env:
       - name: MYSQL_USER
         value: "{{ MYSQL_USER }}"
