@@ -1,6 +1,6 @@
 # UPS Values
 ups_secret_name: "unified-push-server"
-ups_image_version: "1.3.0"
+ups_image_version: "1.3.0-no-auth"
 ups_port: 9090
 ups_proxy_port: 4180
 
