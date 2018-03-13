@@ -1,1 +1,2 @@
-proxy_serviceaccount_name: "oauth-proxy"
+# UPS Values
+ups_secret_name: "unified-push-server"
