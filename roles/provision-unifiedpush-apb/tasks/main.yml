@@ -175,16 +175,31 @@
         port: 80
         target_port: 8080
 
+- name: create UPS Proxy
+  k8s_v1_service:
+    name: ups-proxy
+    namespace: '{{ namespace }}'
+    labels:
+      app: ups
+      service: ups-proxy
+    selector:
+      app: ups
+      service: ups
+    ports:
+      - name: web
+        port: 80
+        target_port: '{{ ups_proxy_port }}'
+
 - name: create ups route
   openshift_v1_route:
     name: ups
     namespace: '{{ namespace }}'
     labels:
       app: ups
-      service: ups
-      mobile: enabled
-    to_name: ups
+      service: ups-proxy
+    to_name: ups-proxy
     spec_port_target_port: web
+    spec_tls_termination: edge
 
 - name: "Retrieve route to ups-server"
   shell: "oc get routes ups -n {{ namespace }} | grep -v NAME | awk '{print $2}'"
