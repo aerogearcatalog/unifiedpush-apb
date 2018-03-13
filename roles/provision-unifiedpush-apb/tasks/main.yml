@@ -116,6 +116,7 @@
     spec_template_metadata_labels:
       app: ups
       service: ups
+    spec_template_spec_service_account_name: '{{ proxy_serviceaccount_name }}'
     containers:
     - name: ups
       image: 'docker.io/aerogear/unifiedpush-wildfly:{{ ups_image_version }}'
