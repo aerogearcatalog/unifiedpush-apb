@@ -131,16 +131,6 @@
       - name: ups
         protocol: TCP
         container_port: 8080
-      readiness_probe:
-        timeout_seconds: 1
-        initial_delay_seconds: 5
-        _exec:
-          command:
-          - "/bin/sh"
-          - "-i"
-          - "-c"
-          - 'wget http://localhost:8080/ag-push '
-        containers:
     - name: ups-oauth-proxy
       image: '{{ proxy_image }}:{{ proxy_image_tag }}'
       imagePullPolicy: IfNotPresent
