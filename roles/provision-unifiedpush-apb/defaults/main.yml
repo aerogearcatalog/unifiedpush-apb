@@ -1,2 +1,11 @@
+# UPS Values
 ups_secret_name: "unified-push-server"
-ups_image_version: "1.3.0"
+ups_image: " docker.io/matzew/unifiedpush-wildfly-no-auth"
+ups_image_tag: "1.3.0"
+ups_port: 8080
+ups_proxy_port: 4180
+proxy_serviceaccount_name: "oauth-proxy"
+
+# OAuth Proxy values
+proxy_image: "docker.io/openshift/oauth-proxy"
+proxy_image_tag: "v1.1.0"

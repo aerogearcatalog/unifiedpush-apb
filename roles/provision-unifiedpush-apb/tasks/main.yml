@@ -92,6 +92,14 @@
     state: present
   register: mysql_service
 
+- name: "Create OAuth Proxy Serviceaccount yaml"
+  template:
+    src: oauth-proxy-sa.yml.j2
+    dest: /tmp/oauth-proxy-sa.yaml
+
+- name: "Create OAuth Proxy Serviceaccount"
+  shell: "oc create -f /tmp/oauth-proxy-sa.yaml -n {{ namespace }}"
+
 - name: UPS deployment
   openshift_v1_deployment_config:
     name: ups
@@ -108,9 +116,10 @@
     spec_template_metadata_labels:
       app: ups
       service: ups
+    spec_template_spec_service_account_name: '{{ proxy_serviceaccount_name }}'
     containers:
     - name: ups
-      image: 'docker.io/aerogear/unifiedpush-wildfly:{{ ups_image_version }}'
+      image: '{{ ups_image }}:{{ ups_image_tag }}'
       env:
       - name: MYSQL_USER
         value: "{{ MYSQL_USER }}"
@@ -122,15 +131,21 @@
       - name: ups
         protocol: TCP
         container_port: 8080
-      readiness_probe:
-        timeout_seconds: 1
-        initial_delay_seconds: 5
-        _exec:
-          command:
-          - "/bin/sh"
-          - "-i"
-          - "-c"
-          - 'wget http://localhost:8080/ag-push '
+    - name: ups-oauth-proxy
+      image: '{{ proxy_image }}:{{ proxy_image_tag }}'
+      imagePullPolicy: IfNotPresent
+      ports:
+      - containerPort: '{{ ups_proxy_port }}'
+        name: public
+      args:
+      - --provider=openshift
+      - --openshift-service-account={{ proxy_serviceaccount_name }}
+      - --upstream=http://localhost:{{ ups_port }}
+      - >-
+        --openshift-sar={"namespace":"{{ namespace }}","resource":"deploymentconfigs","name":"ups","verb":"update"}
+      - --http-address=0.0.0.0:{{ ups_proxy_port }}
+      - --https-address=
+      - --cookie-secret=SECRET
 
 - name: create UPS service
   k8s_v1_service:
@@ -150,16 +165,31 @@
         port: 80
         target_port: 8080
 
+- name: create UPS Proxy
+  k8s_v1_service:
+    name: ups-proxy
+    namespace: '{{ namespace }}'
+    labels:
+      app: ups
+      service: ups-proxy
+    selector:
+      app: ups
+      service: ups
+    ports:
+      - name: web
+        port: 80
+        target_port: '{{ ups_proxy_port }}'
+
 - name: create ups route
   openshift_v1_route:
     name: ups
     namespace: '{{ namespace }}'
     labels:
       app: ups
-      service: ups
-      mobile: enabled
-    to_name: ups
+      service: ups-proxy
+    to_name: ups-proxy
     spec_port_target_port: web
+    spec_tls_termination: edge
 
 - name: "Retrieve route to ups-server"
   shell: "oc get routes ups -n {{ namespace }} | grep -v NAME | awk '{print $2}'"
