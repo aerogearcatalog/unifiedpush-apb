@@ -24,13 +24,13 @@ plans:
       type: string
       title: UPS db username
     - name: MYSQL_PASSWORD
-      required: True
-      default: unifiedpush
+      description: (generated if left blank)
+      required: False
       type: string
       title: UPS db password
     - name: MYSQL_ROOT_PASSWORD
-      required: True
-      default: supersecret
+      description: (generated if left blank)
+      required: False
       type: string
       title: UPS db root password
     - name: MYSQL_DATABASE
