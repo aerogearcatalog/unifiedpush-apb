@@ -3,7 +3,7 @@
     namespace: '{{ namespace }}'
     state: absent
 
-- openshift_v1_deployment_config:
+- k8s_extensions_v1beta1_deployment:
     name: mysql
     namespace: '{{ namespace }}'
     state: absent
@@ -13,7 +13,7 @@
     namespace: '{{ namespace }}'
     state: absent    
 
-- openshift_v1_deployment_config:
+- k8s_extensions_v1beta1_deployment:
     name: ups
     namespace: '{{ namespace }}'
     state: absent
