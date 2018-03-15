@@ -100,6 +100,9 @@
 - name: "Create OAuth Proxy Serviceaccount"
   shell: "oc create -f /tmp/oauth-proxy-sa.yaml -n {{ namespace }}"
 
+- name: "Delete OAuth proxy Template File"
+  file: path=/tmp/oauth-proxy-sa.yaml state=absent
+
 # Check the containers in the mysql pod and make sure they are all ready
 - name: "Wait for all mysql containers to become ready"
   shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig=mysql" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
@@ -210,3 +213,14 @@
 
 - name: "Create UPS secret"
   shell: "oc create -f /tmp/secret.yaml -n {{ namespace }}"
+
+- name: "Delete UPS Secret Template File"
+  file: path=/tmp/secret.yaml state=absent
+
+# We need to wait for the deployment to be ready before we can exit the ansible job
+- name: "Wait for all UPS containers to become ready"
+  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig=ups" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
+  register: ups_result
+  until: ups_result.stdout.find("2") != -1
+  retries: 30
+  delay: 5

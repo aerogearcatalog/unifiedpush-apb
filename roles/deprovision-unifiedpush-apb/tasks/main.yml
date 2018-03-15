@@ -28,5 +28,12 @@
     namespace: '{{ namespace }}'
     state: absent
 
-- name: delete ups secret
-  command: oc delete secret {{ ups_secret_name }} -n {{ namespace }}
+- k8s_v1_secret:
+    name: '{{ ups_secret_name }}'
+    namespace: '{{ namespace }}'
+    state: absent
+
+- k8s_v1_service_account:
+    name: '{{ proxy_serviceaccount_name }}'
+    namespace: '{{ namespace }}'
+    state: absent

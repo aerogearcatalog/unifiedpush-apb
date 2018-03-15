@@ -1,7 +1,7 @@
 version: 1.0
 name: unifiedpush-apb
 description: AeroGear UnifiedPush Server
-bindable: True
+bindable: False
 async: optional
 tags: 
   - mobile-service
@@ -44,7 +44,3 @@ plans:
       enum: ['55', '56']
       type: enum
       title: MySQL version
-    bind_parameters:
-    - name: service
-      title: The service the client is for
-      type: string
