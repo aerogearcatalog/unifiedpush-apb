@@ -44,6 +44,12 @@
       - --http-address=0.0.0.0:{{ ups_proxy_port }}
       - --https-address=
       - --cookie-secret=SECRET
+    - name: ups-sync-service
+      image: 'pb82/ups-sidecar'
+      imagePullPolicy: IfNotPresent
+      env:
+      - name: NAMESPACE
+        value: "{{ namespace }}"
 
 - name: create UPS service
   k8s_v1_service:
@@ -109,7 +115,7 @@
 - name: "Wait for all UPS containers to become ready"
   shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig=ups" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
   register: ups_result
-  until: ups_result.stdout.find("2") != -1
+  until: ups_result.stdout.find("3") != -1
   retries: 30
   delay: 5
 
