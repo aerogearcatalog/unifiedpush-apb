@@ -47,10 +47,10 @@
 
 - name: create UPS service
   k8s_v1_service:
-    name: ups
+    name: ups-service
     namespace: '{{ namespace }}'
     annotations:
-      org.aerogear.metrics/plain_endpoint: "/ag-push/rest/prometheus/metrics"
+      org.aerogear.metrics/plain_endpoint: "/rest/prometheus/metrics"
     labels:
       app: ups
       service: ups
@@ -111,3 +111,17 @@
   until: ups_result.stdout.find("2") != -1
   retries: 30
   delay: 5
+
+- name: "Retrieve internal ups-service IP address"
+  shell: "oc get service ups-service -n {{ namespace }} | grep -v CLUSTER-IP | awk '{print $2}'"
+  register: internal_ups_ip
+
+- name: Create {{ namespace }} PushApplication on {{ ups_route.route.spec.host }}
+  uri:
+    url: http://{{ internal_ups_ip.stdout }}/rest/applications
+    method: POST
+    body: '{"name" : "{{ namespace }}", "description" :  "Push application for {{ namespace }}"}'
+    validate_certs: no
+    body_format: json
+    status_code: 201
+  register: namespace_push_app
