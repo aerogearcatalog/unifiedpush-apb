@@ -20,17 +20,14 @@
       storage: 10Gi
     state: present
 
-- name: MySQL deployment
-  openshift_v1_deployment_config:
+- name: MySQL k8s deployment
+  k8s_extensions_v1beta1_deployment:
     name: mysql
     namespace: "{{ namespace }}"
     labels:
       app: mysql
       service: mysql
     replicas: 1
-    selector:
-      app: mysql
-      service: mysql
     spec_template_metadata_labels:
       app: mysql
       service: mysql
@@ -71,8 +68,6 @@
     - name: mysql-data
       persistent_volume_claim:
         claim_name: mysql
-    triggers:
-    - type: ConfigChange
     state: present
 
 - name: MySQL service
@@ -105,14 +100,14 @@
 
 # Check the containers in the mysql pod and make sure they are all ready
 - name: "Wait for all mysql containers to become ready"
-  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig=mysql" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
+  shell: oc get pods --namespace={{ namespace }} --selector="service=mysql" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
   register: mysql_result
   until: mysql_result.stdout.find("1") != -1
   retries: 30
   delay: 5
 
-- name: UPS deployment
-  openshift_v1_deployment_config:
+- name: UPS k8s deployment
+  k8s_extensions_v1beta1_deployment:
     name: ups
     namespace: "{{ namespace }}"
     labels:
@@ -121,9 +116,6 @@
       name: ups
       mobile: enabled
     replicas: 1
-    selector:
-      app: ups
-      service: ups
     spec_template_metadata_labels:
       app: ups
       service: ups
@@ -219,7 +211,7 @@
 
 # We need to wait for the deployment to be ready before we can exit the ansible job
 - name: "Wait for all UPS containers to become ready"
-  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig=ups" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
+  shell: oc get pods --namespace={{ namespace }} --selector="service=ups" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
   register: ups_result
   until: ups_result.stdout.find("2") != -1
   retries: 30
