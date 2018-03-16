@@ -62,6 +62,7 @@
       - name: web
         port: 80
         target_port: 8080
+  register: unifiedpush_service
 
 - name: create UPS Proxy
   k8s_v1_service:
@@ -112,13 +113,9 @@
   retries: 30
   delay: 5
 
-- name: "Retrieve internal ups-service IP address"
-  shell: "oc get service ups-service -n {{ namespace }} | grep -v CLUSTER-IP | awk '{print $2}'"
-  register: internal_ups_ip
-
-- name: Create {{ namespace }} PushApplication on {{ ups_route.route.spec.host }}
+- name: Create {{ namespace }} PushApplication on service host {{ unifiedpush_service.service.spec.cluster_ip }}
   uri:
-    url: http://{{ internal_ups_ip.stdout }}/rest/applications
+    url: http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications
     method: POST
     body: '{"name" : "{{ namespace }}", "description" :  "Push application for {{ namespace }}"}'
     validate_certs: no
