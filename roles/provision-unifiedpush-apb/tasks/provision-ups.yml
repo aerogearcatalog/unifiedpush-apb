@@ -44,6 +44,12 @@
       - --http-address=0.0.0.0:{{ ups_proxy_port }}
       - --https-address=
       - --cookie-secret=SECRET
+    - name: ups-sync-service
+      image: 'pb82/ups-sidecar'
+      imagePullPolicy: IfNotPresent
+      env:
+      - name: NAMESPACE
+        value: "{{ namespace }}"
 
 - name: create UPS service
   k8s_v1_service:
@@ -94,6 +100,26 @@
   shell: "oc get routes ups -n {{ namespace }} | grep -v NAME | awk '{print $2}'"
   register: ups_route
 
+# We need to wait for the deployment to be ready before we can exit the ansible job
+- name: "Wait for all UPS containers to become ready"
+  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig=ups" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
+  register: ups_result
+  until: ups_result.stdout.find("3") != -1
+  retries: 30
+  delay: 5
+
+- name: "Create {{ namespace }} PushApplication on service host {{ unifiedpush_service.service.spec.cluster_ip }}"
+  uri:
+    url: http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications
+    method: POST
+    body: '{"name" : "{{ namespace }}", "description" :  "Push application for {{ namespace }}"}'
+    validate_certs: no
+    body_format: json
+    status_code: 201
+  retries: 5
+  delay: 5
+  register: namespace_push_app
+
 - name: "Create ups secret yaml file"
   template:
     src: secret.yml.j2
@@ -104,21 +130,3 @@
 
 - name: "Delete UPS Secret Template File"
   file: path=/tmp/secret.yaml state=absent
-
-# We need to wait for the deployment to be ready before we can exit the ansible job
-- name: "Wait for all UPS containers to become ready"
-  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig=ups" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
-  register: ups_result
-  until: ups_result.stdout.find("2") != -1
-  retries: 30
-  delay: 5
-
-- name: Create {{ namespace }} PushApplication on service host {{ unifiedpush_service.service.spec.cluster_ip }}
-  uri:
-    url: http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications
-    method: POST
-    body: '{"name" : "{{ namespace }}", "description" :  "Push application for {{ namespace }}"}'
-    validate_certs: no
-    body_format: json
-    status_code: 201
-  register: namespace_push_app
