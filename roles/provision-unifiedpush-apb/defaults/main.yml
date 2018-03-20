@@ -6,6 +6,10 @@ ups_port: 8080
 ups_proxy_port: 4180
 proxy_serviceaccount_name: "oauth-proxy"
 
+# MySQL password values
+MYSQL_PASSWORD: "{{ _MYSQL_PASSWORD | default(lookup('password', '/tmp/mysql_pass chars=ascii_letters,digits'), true) }}"
+MYSQL_ROOT_PASSWORD: "{{ _MYSQL_ROOT_PASSWORD | default(lookup('password', '/tmp/mysql_root_pass chars=ascii_letters,digits'), true) }}"
+
 # OAuth Proxy values
 proxy_image: "docker.io/openshift/oauth-proxy"
 proxy_image_tag: "v1.1.0"
