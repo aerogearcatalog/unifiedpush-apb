@@ -117,6 +117,7 @@
     body_format: json
     status_code: 201
   retries: 5
+  until: namespace_push_app.status == 201
   delay: 5
   register: namespace_push_app
 
