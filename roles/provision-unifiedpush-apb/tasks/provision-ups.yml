@@ -45,7 +45,7 @@
       - --https-address=
       - --cookie-secret=SECRET
     - name: ups-sync-service
-      image: 'pb82/ups-sidecar'
+      image: 'aerogear/ups-sidecar'
       imagePullPolicy: IfNotPresent
       env:
       - name: NAMESPACE
