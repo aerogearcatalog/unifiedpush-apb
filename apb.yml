@@ -1,7 +1,7 @@
 version: 1.0
 name: unifiedpush-apb
 description: AeroGear UnifiedPush Server
-bindable: False
+bindable: True
 async: optional
 tags: 
   - mobile-service
@@ -44,3 +44,18 @@ plans:
       enum: ['55', '56']
       type: enum
       title: MySQL version
+    bind_parameters:
+    - name: app
+      required: True
+      title: The name of the app to bind to
+      type: string
+    - name: type
+      required: True
+      title: App target
+      type: enum
+      default: "Android"
+      enum: ["Android"]
+    - name: googlekey
+      required: True
+      title: Your Google Key for Firebase Cloud Messaging
+      type: string

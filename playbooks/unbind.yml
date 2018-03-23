@@ -1,4 +1,4 @@
-- name: unifiedpush-apb playbook to provision the application
+- name: unifiedpush-apb playbook to bind the application
   hosts: localhost
   gather_facts: false
   connection: local
@@ -8,5 +8,5 @@
   - role: ansible.kubernetes-modules
     install_python_requirements: no
   - role: ansibleplaybookbundle.asb-modules
-  - role: provision-unifiedpush-apb
+  - role: unbind-unifiedpush-apb
     playbook_debug: false

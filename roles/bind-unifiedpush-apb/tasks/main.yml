@@ -1,0 +1,16 @@
+- name: "Create ups secret yaml file"
+  template:
+    src: binding_secret.yml.j2
+    dest: /tmp/secret.yaml
+
+- name: "Create binding secret"
+  shell: "oc create -f /tmp/secret.yaml -n {{ namespace }}"
+
+- name: "Delete binding Secret Template File"
+  file: path=/tmp/secret.yaml state=absent
+
+- name: Store the name of the binding secret to be used in unbind
+  asb_encode_binding:
+    fields:
+      NAMESPACE: "{{ namespace }}"
+      BINDING_SECRET: "{{ app }}-binding-secret"
