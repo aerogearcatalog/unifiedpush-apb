@@ -1,3 +1,3 @@
-# UPS Values
+# Global values used in all playbooks
 ups_secret_name: "unified-push-server"
 proxy_serviceaccount_name: "oauth-proxy"

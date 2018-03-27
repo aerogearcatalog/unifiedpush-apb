@@ -37,3 +37,6 @@
     name: '{{ proxy_serviceaccount_name }}'
     namespace: '{{ namespace }}'
     state: absent
+
+- name: "Delete variant bindings"
+  shell:  oc delete secrets -l secretType==mobile-client-binding-secret -n '{{ namespace }}'
