@@ -45,9 +45,9 @@ plans:
       type: enum
       title: MySQL version
     bind_parameters:
-    - name: app
+    - name: variantName
       required: True
-      title: The name of the app to bind to
+      title: The name of the variant to bind the mobile client representation to
       type: string
     - name: type
       required: True
@@ -58,4 +58,8 @@ plans:
     - name: googlekey
       required: True
       title: Your Google Key for Firebase Cloud Messaging
+      type: string
+    - name: projectNumber
+      required: True
+      title: Your FCM Project Number, needed on the mobile client for connecting with FCM
       type: string
