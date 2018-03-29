@@ -42,6 +42,7 @@
       - >-
         --openshift-sar={"namespace":"{{ namespace }}","resource":"deploymentconfigs","name":"ups","verb":"update"}
       - --http-address=0.0.0.0:{{ ups_proxy_port }}
+      - --skip-auth-regex=/rest/sender,/rest/registry/device,/rest/prometheus/metrics
       - --https-address=
       - --cookie-secret=SECRET
     - name: ups-sync-service
