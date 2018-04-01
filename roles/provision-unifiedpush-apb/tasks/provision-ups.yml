@@ -19,12 +19,21 @@
     - name: ups
       image: '{{ ups_image }}:{{ ups_image_tag }}'
       env:
-      - name: MYSQL_USER
-        value: "{{ MYSQL_USER }}"
-      - name: MYSQL_PASSWORD
-        value: "{{ MYSQL_PASSWORD }}"
-      - name: MYSQL_DATABASE
-        value: "{{ MYSQL_DATABASE }}"
+      - name: POSTGRES_USER
+        value_from:
+          secret_key_ref:
+            name: '{{ postgres_secret_name }}'
+            key: database-user
+      - name: POSTGRES_PASSWORD
+        value_from:
+          secret_key_ref:
+            name: '{{ postgres_secret_name }}'
+            key: database-password
+      - name: POSTGRES_DATABASE
+        value_from:
+          secret_key_ref:
+            name: '{{ postgres_secret_name }}'
+            key: database-name
       ports:
       - name: ups
         protocol: TCP

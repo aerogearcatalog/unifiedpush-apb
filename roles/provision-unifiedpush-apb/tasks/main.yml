@@ -21,5 +21,5 @@
 - name: Give default user admin permissions
   shell: 'oc policy add-role-to-user admin system:serviceaccount:{{ namespace }}:{{ proxy_serviceaccount_name }} -n {{ namespace }}'
 
-- include_tasks: provision-mysql.yml 
+- include_tasks: provision-database.yml 
 - include_tasks: provision-ups.yml

@@ -10,40 +10,14 @@ metadata:
   imageUrl: "https://pbs.twimg.com/profile_images/1794440005/aerogear_icon-1_400x400.png"
   documentationUrl: "https://aerogear.org/push"
   providerDisplayName: "Red Hat, Inc."
-  dependencies: ['MySQL:55']
+  dependencies: ['POSTGRES:95']
   serviceName: ups
 plans:
   - name: default
     description: Deploy UPS
     free: True
     metadata: {}
-    parameters: 
-    - name: MYSQL_USER
-      required: True
-      default: unifiedpush
-      type: string
-      title: UPS db username
-    - name: _MYSQL_PASSWORD
-      description: (generated if left blank)
-      required: False
-      type: string
-      title: UPS db password
-    - name: _MYSQL_ROOT_PASSWORD
-      description: (generated if left blank)
-      required: False
-      type: string
-      title: UPS db root password
-    - name: MYSQL_DATABASE
-      required: True
-      default: unifiedpush
-      type: string
-      title: UPS database name
-    - name: MYSQL_VERSION
-      required: True
-      default: "55"
-      enum: ['55', '56']
-      type: enum
-      title: MySQL version
+    parameters: []
     bind_parameters:
     - name: variantName
       required: True
