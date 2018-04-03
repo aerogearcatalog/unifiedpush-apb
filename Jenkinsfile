@@ -45,7 +45,7 @@ node ("ocp-slave") {
 
         stage('Test APB') {
             try {
-                timeout(5) {
+                timeout(15) {
                     sh script: """
                     oc run testing-pod \
                         --image=docker-registry.default.svc:5000/${projectName}/${repositoryName} \
