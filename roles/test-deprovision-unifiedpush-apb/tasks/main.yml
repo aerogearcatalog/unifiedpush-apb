@@ -1,0 +1,61 @@
+---
+
+# Instead of testing that the deployment config is removed, we test that the pods
+# are cleaned up afterwards
+- name: Check that all pods have been removed
+  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig in (mysql,ups)" 2>&1
+  register: result
+  retries: 50
+  delay: 10
+  failed_when:
+    - '"No resources found." not in result.stdout'
+  until: '"No resources found." in result.stdout'
+
+- name: Check that the ups route has been removed
+  shell: oc get route --namespace={{ namespace }} {{ ups_route_name }} 2>&1
+  register: result
+  retries: 50
+  delay: 10
+  failed_when:
+    - '"not found" not in result.stdout'
+  until: '"not found" in result.stdout'
+
+- name: Check that all services have been removed
+  shell: oc get service --namespace={{ namespace }} {{ item }} 2>&1
+  register: result
+  retries: 50
+  delay: 10
+  failed_when:
+    - '"not found" not in result.stdout'
+  until: '"not found" in result.stdout'
+  with_items:
+    - '{{ mysql_service_name}}'
+    - '{{ ups_service_name}}'
+    - '{{ ups_proxy_service_name}}'
+
+- name: Check that all secrets have been removed
+  shell: oc get secret --namespace={{ namespace }} {{ ups_secret_name }} 2>&1
+  register: result
+  retries: 50
+  delay: 10
+  failed_when:
+    - '"not found" not in result.stdout'
+  until: '"not found" in result.stdout'
+
+- name: Check that all persistent volume claims have been removed
+  shell: oc get pvc --namespace={{ namespace }} {{ mysql_claim_name }} 2>&1
+  register: result
+  retries: 50
+  delay: 10
+  failed_when:
+    - '"not found" not in result.stdout'
+  until: '"not found" in result.stdout'
+
+- name: Check that the service account has been removed
+  shell: oc get serviceaccount --namespace={{ namespace }} {{ proxy_serviceaccount_name }} 2>&1
+  register: result
+  retries: 50
+  delay: 10
+  failed_when:
+    - '"not found" not in result.stdout'
+  until: '"not found" in result.stdout'

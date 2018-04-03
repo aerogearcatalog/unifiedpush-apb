@@ -1,0 +1,30 @@
+---
+- name: Test unifiedpush-apb
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars_files:
+  - /opt/ansible/vars/main.yml
+
+  roles:
+  - role: ansible.kubernetes-modules
+    install_python_requirements: no
+  - role: ansibleplaybookbundle.asb-modules
+  post_tasks:
+  - name: Load default variables for testing
+    include_vars: test_defaults.yml
+  - name: create project for namespace
+    openshift_v1_project:
+      name: '{{ namespace }}'
+  - name: Run the provision role.
+    include_role:
+      name: provision-unifiedpush-apb
+  - name: Run the test role.
+    include_role:
+      name: test-provision-unifiedpush-apb
+  - name: Run the deprovision role.
+    include_role:
+      name: deprovision-unifiedpush-apb
+  - name: Run the deprovision test role.
+    include_role:
+      name: test-deprovision-unifiedpush-apb
