@@ -1,3 +1,9 @@
 # Global values used in all playbooks
 ups_secret_name: "unified-push-server"
 proxy_serviceaccount_name: "oauth-proxy"
+mysql_claim_name: "mysql-claim"
+mysql_service_name: "mysql"
+ups_route_name: "ups"
+ups_service_name: "ups-service"
+ups_proxy_service_name: "ups-proxy"
+

@@ -1,5 +1,5 @@
 - k8s_v1_persistent_volume_claim:
-    name: mysql
+    name: '{{ mysql_claim_name }}'
     namespace: '{{ namespace }}'
     state: absent
 
@@ -9,7 +9,7 @@
     state: absent
 
 - k8s_v1_service:
-    name: mysql
+    name: '{{ mysql_service_name }}'
     namespace: '{{ namespace }}'
     state: absent    
 
@@ -19,12 +19,17 @@
     state: absent
 
 - k8s_v1_service:
-    name: unifiedpush
+    name: '{{ ups_service_name }}'
     namespace: '{{ namespace }}'
-    state: absent    
+    state: absent
+
+- k8s_v1_service:
+    name: '{{ ups_proxy_service_name }}'
+    namespace: '{{ namespace }}'
+    state: absent  
 
 - openshift_v1_route:
-    name: unifiedpush
+    name: '{{ ups_route_name }}'
     namespace: '{{ namespace }}'
     state: absent
 
