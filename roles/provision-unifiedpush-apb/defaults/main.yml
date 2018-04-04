@@ -13,6 +13,10 @@ postgres_database_name: unifiedpush
 postgres_service_name: postgres
 postgres_secret_name: ups-postgres
 
+# Sidecar Image values
+ups_sidecar_image: "docker.io/aerogear/ups-config-operator"
+ups_sidecar_image_tag: "0.0.1"
+
 # OAuth Proxy values
 proxy_image: "docker.io/openshift/oauth-proxy"
 proxy_image_tag: "v1.1.0"
