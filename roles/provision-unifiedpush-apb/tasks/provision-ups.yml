@@ -1,6 +1,6 @@
 - name: UPS deployment
   openshift_v1_deployment_config:
-    name: ups
+    name: '{{ ups_deploymentconfig_name }}'
     namespace: "{{ namespace }}"
     labels:
       app: ups
@@ -109,7 +109,7 @@
 
 # We need to wait for the deployment to be ready before we can exit the ansible job
 - name: "Wait for all UPS containers to become ready"
-  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig=ups" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
+  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig={{ ups_deploymentconfig_name }}" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
   register: ups_result
   until: ups_result.stdout.find("3") != -1
   retries: 30

@@ -1,17 +1,13 @@
 # UPS Values
-ups_secret_name: "unified-push-server"
 ups_image: " docker.io/matzew/unifiedpush-psql"
 ups_image_tag: "latest"
 ups_port: 8080
 ups_proxy_port: 4180
-proxy_serviceaccount_name: "oauth-proxy"
 
 # Non global constants
 postgres_image: centos/postgresql-95-centos7
 postgres_image_tag: '9.5'
 postgres_database_name: unifiedpush
-postgres_service_name: postgres
-postgres_secret_name: ups-postgres
 
 # Sidecar Image values
 ups_sidecar_image: "docker.io/aerogear/ups-config-operator"
