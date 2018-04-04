@@ -55,7 +55,7 @@
       - --https-address=
       - --cookie-secret=SECRET
     - name: ups-sync-service
-      image: 'aerogear/ups-config-operator'
+      image: '{{ ups_sidecar_image }}:{{ ups_sidecar_image_tag }}'
       imagePullPolicy: IfNotPresent
       env:
       - name: NAMESPACE
