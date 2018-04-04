@@ -12,5 +12,6 @@
 - name: Store the name of the binding secret to be used in unbind
   asb_encode_binding:
     fields:
-      NAMESPACE: "{{ namespace }}"
-      BINDING_SECRET: "{{ app }}-binding-secret"
+      namespace: "{{ namespace }}"
+      googleKey: "{{ googlekey }}"
+      appType: "{{ type }}"
