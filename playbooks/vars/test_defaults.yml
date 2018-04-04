@@ -1,3 +1,0 @@
-MYSQL_USER: 'testuser'
-MYSQL_DATABASE: 'unifiedpush'
-MYSQL_VERSION: '55'
