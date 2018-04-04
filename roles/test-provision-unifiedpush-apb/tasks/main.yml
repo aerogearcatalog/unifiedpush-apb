@@ -10,3 +10,12 @@
     - webpage.status == 403
     - '"Log in with OpenShift" not in webpage.content'
   until: '"Log in with OpenShift" in webpage.content'
+
+- name: "Check that new application was created for the namespace {{ namespace }}"
+  uri:
+    method: GET
+    url: "http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications"
+    return_content: yes
+    validate_certs: no
+  register: applications
+  failed_when: applications.json[0].name != "{{ namespace }}"
