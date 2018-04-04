@@ -1,20 +1,27 @@
-- k8s_v1_persistent_volume_claim:
-    name: '{{ mysql_claim_name }}'
+# PostgreSQL
+- openshift_v1_deployment_config:
+    name: '{{ postgres_deploymentconfig_name }}'
     namespace: '{{ namespace }}'
     state: absent
 
-- openshift_v1_deployment_config:
-    name: mysql
+- k8s_v1_persistent_volume_claim:
+    name: '{{ postgres_pvc_name }}'
+    namespace: '{{ namespace }}'
+    state: absent
+
+- k8s_v1_secret:
+    name: '{{ postgres_secret_name }}'
     namespace: '{{ namespace }}'
     state: absent
 
 - k8s_v1_service:
-    name: '{{ mysql_service_name }}'
+    name: '{{ postgres_service_name }}'
     namespace: '{{ namespace }}'
-    state: absent    
+    state: absent
 
+# UPS
 - openshift_v1_deployment_config:
-    name: ups
+    name: '{{ ups_deploymentconfig_name }}'
     namespace: '{{ namespace }}'
     state: absent
 

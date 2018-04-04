@@ -1,9 +1,13 @@
 # Global values used in all playbooks
-ups_secret_name: "unified-push-server"
-proxy_serviceaccount_name: "oauth-proxy"
-mysql_claim_name: "mysql-claim"
-mysql_service_name: "mysql"
-ups_route_name: "ups"
-ups_service_name: "ups-service"
-ups_proxy_service_name: "ups-proxy"
+proxy_serviceaccount_name: "sa-oauth-proxy"
 
+postgres_deploymentconfig_name: "postgres"
+postgres_pvc_name: "postgres-pvc"
+postgres_secret_name: "postgres-secret"
+postgres_service_name: "postgres-service"
+
+ups_deploymentconfig_name: "ups"
+ups_proxy_service_name: "ups-proxy"
+ups_route_name: "ups-route"
+ups_secret_name: "ups-secret"
+ups_service_name: "ups-service"

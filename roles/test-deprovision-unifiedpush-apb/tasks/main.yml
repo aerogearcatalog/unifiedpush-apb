@@ -3,7 +3,7 @@
 # Instead of testing that the deployment config is removed, we test that the pods
 # are cleaned up afterwards
 - name: Check that all pods have been removed
-  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig in (mysql,ups)" 2>&1
+  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig in ({{ postgres_deploymentconfig_name }}, {{ ups_deploymentconfig_name }})" 2>&1
   register: result
   retries: 50
   delay: 10
@@ -29,7 +29,7 @@
     - '"not found" not in result.stdout'
   until: '"not found" in result.stdout'
   with_items:
-    - '{{ mysql_service_name}}'
+    - '{{ postgres_service_name}}'
     - '{{ ups_service_name}}'
     - '{{ ups_proxy_service_name}}'
 
@@ -43,7 +43,7 @@
   until: '"not found" in result.stdout'
 
 - name: Check that all persistent volume claims have been removed
-  shell: oc get pvc --namespace={{ namespace }} {{ mysql_claim_name }} 2>&1
+  shell: oc get pvc --namespace={{ namespace }} {{ postgres_pvc_name }} 2>&1
   register: result
   retries: 50
   delay: 10
