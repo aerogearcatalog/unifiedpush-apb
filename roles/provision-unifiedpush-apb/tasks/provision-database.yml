@@ -31,7 +31,7 @@
     session_affinity: None
 
 - k8s_v1_persistent_volume_claim:
-    name: '{{ postgres_service_name }}'
+    name: '{{ postgres_pvc_name }}'
     namespace: '{{ namespace }}'
     access_modes:
     - ReadWriteOnce
@@ -39,14 +39,14 @@
       storage: "1Gi"
 
 - openshift_v1_deployment_config:
-    name: '{{ postgres_service_name }}'
+    name: '{{ postgres_deploymentconfig_name }}'
     namespace: '{{ namespace }}'
     replicas: 1
     labels:
-      app: ups 
+      app: '{{ ups_deploymentconfig_name }}' 
       service: '{{ postgres_service_name }}'
     spec_template_metadata_labels:
-      app: ups 
+      app: '{{ ups_deploymentconfig_name }}' 
       name: '{{ postgres_service_name }}'
     containers:
     - name: postgresql
@@ -89,18 +89,18 @@
         limits:
           memory: '512Mi'
       volume_mounts:
-      - name: '{{ postgres_service_name }}-data'
+      - name: '{{ postgres_pvc_name }}-data'
         mount_path: "/var/lib/pgsql/data"
       termination_message_path: "/dev/termination-log"
     volumes:
-    - name: '{{ postgres_service_name }}-data'
+    - name: '{{ postgres_pvc_name }}-data'
       persistent_volume_claim:
-        claim_name: '{{ postgres_service_name }}'
+        claim_name: '{{ postgres_pvc_name }}'
 
 
 # Check the containers in the Postgres pod and make sure they are all ready
 - name: "Wait for all Postgres containers to become ready"
-  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig=postgres" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
+  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig={{ postgres_deploymentconfig_name }}" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
   register: postgresql_result
   until: postgresql_result.stdout.find("1") != -1
   retries: 30

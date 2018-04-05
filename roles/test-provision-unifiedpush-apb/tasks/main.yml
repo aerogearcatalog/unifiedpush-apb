@@ -1,0 +1,21 @@
+- name: Check that the unifiedpush login webpage is accessible
+  uri:
+    url: "https://{{ ups_route.route.spec.host }}"
+    return_content: yes
+    validate_certs: no
+  register: webpage
+  retries: 10
+  delay: 20
+  failed_when:
+    - webpage.status == 403
+    - '"Log in with OpenShift" not in webpage.content'
+  until: '"Log in with OpenShift" in webpage.content'
+
+- name: "Check that new application was created for the namespace {{ namespace }}"
+  uri:
+    method: GET
+    url: "http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications"
+    return_content: yes
+    validate_certs: no
+  register: applications
+  failed_when: applications.json[0].name != "{{ namespace }}"
