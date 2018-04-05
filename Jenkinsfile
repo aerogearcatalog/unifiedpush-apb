@@ -56,6 +56,8 @@ node ("ocp-slave") {
                         entrypoint.sh test --extra-vars '{\"namespace\": \"${projectName}\"}'
                     sleep 10
                     oc logs --pod-running-timeout=20s -f pod/testing-pod
+                    # Check if the status of testing-pod is error
+                    if [ \$(oc get pods | grep testing-pod | awk '{print \$3}') == "Error" ] ; then exit 1 ; fi
                     """
                 }
             } catch (Exception e) {
