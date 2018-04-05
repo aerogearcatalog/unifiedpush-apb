@@ -15,7 +15,7 @@ postgres_secret_name: ups-postgres
 
 # Sidecar Image values
 ups_sidecar_image: "docker.io/aerogear/ups-config-operator"
-ups_sidecar_image_tag: "0.0.1"
+ups_sidecar_image_tag: "master"
 
 # OAuth Proxy values
 proxy_image: "docker.io/openshift/oauth-proxy"
