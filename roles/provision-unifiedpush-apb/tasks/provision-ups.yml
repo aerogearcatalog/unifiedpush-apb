@@ -1,6 +1,6 @@
 - name: UPS deployment
   openshift_v1_deployment_config:
-    name: ups
+    name: '{{ ups_deploymentconfig_name }}'
     namespace: "{{ namespace }}"
     labels:
       app: ups
@@ -63,7 +63,7 @@
 
 - name: create UPS service
   k8s_v1_service:
-    name: ups-service
+    name: '{{ ups_service_name }}'
     namespace: '{{ namespace }}'
     annotations:
       org.aerogear.metrics/plain_endpoint: "/rest/prometheus/metrics"
@@ -82,7 +82,7 @@
 
 - name: create UPS Proxy
   k8s_v1_service:
-    name: ups-proxy
+    name: '{{ ups_proxy_service_name }}'
     namespace: '{{ namespace }}'
     labels:
       app: ups
@@ -97,7 +97,7 @@
 
 - name: create ups route
   openshift_v1_route:
-    name: ups
+    name: '{{ ups_route_name }}'
     namespace: '{{ namespace }}'
     labels:
       app: ups
@@ -105,14 +105,11 @@
     to_name: ups-proxy
     spec_port_target_port: web
     spec_tls_termination: edge
-
-- name: "Retrieve route to ups-server"
-  shell: "oc get routes ups -n {{ namespace }} | grep -v NAME | awk '{print $2}'"
   register: ups_route
 
 # We need to wait for the deployment to be ready before we can exit the ansible job
 - name: "Wait for all UPS containers to become ready"
-  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig=ups" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
+  shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig={{ ups_deploymentconfig_name }}" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
   register: ups_result
   until: ups_result.stdout.find("3") != -1
   retries: 30

@@ -1,3 +1,13 @@
 # Global values used in all playbooks
-ups_secret_name: "unified-push-server"
 proxy_serviceaccount_name: "oauth-proxy"
+
+postgres_deploymentconfig_name: "postgres"
+postgres_pvc_name: "postgres-pvc"
+postgres_secret_name: "postgres-secret"
+postgres_service_name: "postgres"
+
+ups_deploymentconfig_name: "ups"
+ups_proxy_service_name: "ups-proxy"
+ups_route_name: "ups"
+ups_secret_name: "unified-push-server"
+ups_service_name: "ups"
