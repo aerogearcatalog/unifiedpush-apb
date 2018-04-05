@@ -8,6 +8,6 @@ postgres_service_name: "postgres"
 
 ups_deploymentconfig_name: "ups"
 ups_proxy_service_name: "ups-proxy"
-ups_route_name: "ups-route"
+ups_route_name: "ups"
 ups_secret_name: "ups-secret"
 ups_service_name: "ups"
