@@ -43,10 +43,10 @@
     namespace: '{{ namespace }}'
     replicas: 1
     labels:
-      app: ups 
+      app: '{{ ups_deploymentconfig_name }}' 
       service: '{{ postgres_service_name }}'
     spec_template_metadata_labels:
-      app: ups 
+      app: '{{ ups_deploymentconfig_name }}' 
       name: '{{ postgres_service_name }}'
     containers:
     - name: postgresql
