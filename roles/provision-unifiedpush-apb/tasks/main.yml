@@ -1,12 +1,3 @@
-- name: Get the name of the service instance
-  shell: oc get serviceinstance --namespace={{ namespace }} -o jsonpath='{.items[?(@.spec.externalID=="{{ _apb_service_instance_id }}")].metadata.name}'
-  when: _apb_service_instance_id is defined
-  register: service_instance_name
-
-- name: Label the service instance with the service name
-  shell: oc label serviceinstance '{{ service_instance_name.stdout }}' serviceName={{ ups_service_name }} --namespace={{ namespace }}
-  when: _apb_service_instance_id is defined
-
 - name: "Create OAuth Proxy Serviceaccount yaml"
   template:
     src: oauth-proxy-sa.yml.j2
