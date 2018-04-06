@@ -138,6 +138,13 @@
   template:
     src: secret.yml.j2
     dest: /tmp/secret.yaml
+  when: _apb_service_instance_id is defined
+
+- name: "Create ups secret-testing yaml file"
+  template:
+    src: secret-testing.yml.j2
+    dest: /tmp/secret.yaml
+  when: _apb_service_instance_id is not defined
 
 - name: "Create UPS secret"
   shell: "oc create -f /tmp/secret.yaml -n {{ namespace }}"
