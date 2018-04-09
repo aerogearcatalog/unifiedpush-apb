@@ -5,8 +5,8 @@ ups_port: 8080
 ups_proxy_port: 4180
 
 # Non global constants
-postgres_image: centos/postgresql-95-centos7
-postgres_image_tag: '9.5'
+postgres_image: docker.io/centos/postgresql-96-centos7
+postgres_image_tag: '9.6'
 postgres_database_name: unifiedpush
 
 # Sidecar Image values
