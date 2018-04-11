@@ -1,7 +1,14 @@
 - name: "Create ups secret yaml file"
   template:
-    src: binding_secret.yml.j2
+    src: binding_secret_droid.yml.j2
     dest: /tmp/secret.yaml
+  when: googlekey is defined
+
+- name: "Create ups secret yaml file"
+  template:
+    src: binding_secret_ios.yml.j2
+    dest: /tmp/secret.yaml
+  when: passphrase is defined
 
 - name: "Create binding secret"
   shell: "oc create -f /tmp/secret.yaml -n {{ namespace }}"
@@ -9,9 +16,18 @@
 - name: "Delete binding Secret Template File"
   file: path=/tmp/secret.yaml state=absent
 
-- name: Store the name of the binding secret to be used in unbind
+- name: Store the Android name of the binding secret to be used in unbind
   asb_encode_binding:
     fields:
       namespace: "{{ namespace }}"
       googleKey: "{{ googlekey }}"
       appType: "{{ type }}"
+  when: googlekey is defined
+
+- name: Store the iOS name of the binding secret to be used in unbind
+  asb_encode_binding:
+    fields:
+      namespace: "{{ namespace }}"
+      cert: "{{ cert }}"
+      appType: "{{ type }}"
+  when: passphrase is defined
