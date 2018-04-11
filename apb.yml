@@ -33,12 +33,22 @@ plans:
       title: App target
       type: enum
       default: "Android"
-      enum: ["Android"]
+      enum: ["Android", "IOS"]
     - name: googlekey
-      required: True
       title: Your Google Key for Firebase Cloud Messaging
       type: string
+      display_group: Android
     - name: projectNumber
-      required: True
       title: Your FCM Project Number, needed on the mobile client for connecting with FCM
       type: string
+      display_group: Android
+    - name: cert
+      title: iOS .p12 file (encode contents in base64 before pasting)
+      type: string
+      display_type: textarea
+      display_group: iOS
+    - name: passphrase
+      title: the passphrase
+      type: string
+      display_type: password
+      display_group: iOS
