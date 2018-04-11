@@ -95,7 +95,7 @@
         port: 80
         target_port: '{{ ups_proxy_port }}'
 
-- name: create ups route
+- name: create ups https route
   openshift_v1_route:
     name: '{{ ups_route_name }}'
     namespace: '{{ namespace }}'
@@ -117,7 +117,7 @@
 
 - name: "Create {{ namespace }} PushApplication on service host {{ unifiedpush_service.service.spec.cluster_ip }}"
   uri:
-    url: http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications
+    url: "http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications"
     method: POST
     body: '{"name" : "{{ namespace }}", "description" :  "Push application for {{ namespace }}"}'
     validate_certs: no
