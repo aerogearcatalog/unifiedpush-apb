@@ -1,6 +1,6 @@
 - name: Check that the unifiedpush login webpage is accessible
   uri:
-    url: "https://{{ ups_route.route.spec.host }}"
+    url: "{{ ups_protocol }}://{{ ups_route.route.spec.host }}"
     return_content: yes
     validate_certs: no
   register: webpage
@@ -11,6 +11,7 @@
     - '"Log in with OpenShift" not in webpage.content'
   until: '"Log in with OpenShift" in webpage.content'
 
+# Use http here becaues it's not calling the external route
 - name: "Check that new application was created for the namespace {{ namespace }}"
   uri:
     method: GET
