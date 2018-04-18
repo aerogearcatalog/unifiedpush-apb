@@ -4,6 +4,10 @@
     dest: /tmp/secret.yaml
   when: googlekey is defined
 
+- name: "generate variant reference id"
+  shell: head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo ''
+  register: variant_reference_id
+
 - name: "Create ups secret yaml file"
   template:
     src: binding_secret_ios.yml.j2
@@ -30,4 +34,5 @@
       namespace: "{{ namespace }}"
       cert: "{{ cert }}"
       appType: "{{ type }}"
+      variantReferenceId: "{{ variant_reference_id.stdout }}"
   when: passphrase is defined
