@@ -1,12 +1,12 @@
+- name: "generate variant reference id"
+  shell: head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo ''
+  register: variant_reference_id
+  
 - name: "Create ups secret yaml file"
   template:
     src: binding_secret_droid.yml.j2
     dest: /tmp/secret.yaml
   when: googlekey is defined
-
-- name: "generate variant reference id"
-  shell: head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo ''
-  register: variant_reference_id
 
 - name: "Create ups secret yaml file"
   template:
@@ -26,6 +26,7 @@
       namespace: "{{ namespace }}"
       googleKey: "{{ googlekey }}"
       appType: "{{ type }}"
+      variantReferenceId: "{{ variant_reference_id.stdout }}"
   when: googlekey is defined
 
 - name: Store the iOS name of the binding secret to be used in unbind
