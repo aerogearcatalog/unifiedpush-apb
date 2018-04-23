@@ -26,7 +26,7 @@
       namespace: "{{ namespace }}"
       googleKey: "{{ googlekey }}"
       appType: "{{ type }}"
-      variantReferenceId: "{{ variant_reference_id.stdout }}"
+      clientId: "{{ clientId }}"
   when: googlekey is defined
 
 - name: Store the iOS name of the binding secret to be used in unbind
@@ -35,5 +35,5 @@
       namespace: "{{ namespace }}"
       cert: "{{ cert }}"
       appType: "{{ type }}"
-      variantReferenceId: "{{ variant_reference_id.stdout }}"
+      clientId: "{{ clientId }}"
   when: passphrase is defined
