@@ -12,7 +12,7 @@ metadata:
   documentationUrl: "https://github.com/aerogearcatalog/unifiedpush-apb/blob/master/docs/modules/ups_openshift/index.asciidoc"
   providerDisplayName: "Red Hat, Inc."
   dependencies:
-    - "docker.io/aerogear/unifiedpush-wildfly-plain:2.0.1"
+    - "docker.io/aerogear/unifiedpush-wildfly-plain:2.0.2"
     - "docker.io/centos/postgresql-96-centos7:9.6"
     - "docker.io/aerogear/ups-config-operator:master"
     - "docker.io/openshift/oauth-proxy:v1.1.0"
