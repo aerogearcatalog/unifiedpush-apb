@@ -25,7 +25,7 @@ plans:
     metadata: {}
     parameters: []
     bind_parameters:
-    - name: CLIENT_NAME
+    - name: CLIENT_ID
       required: True
       title: The ID of the mobile client to bind this variant to
       type: string
