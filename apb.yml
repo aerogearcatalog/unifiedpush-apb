@@ -27,11 +27,11 @@ plans:
     bind_parameters:
     - name: CLIENT_ID
       required: True
-      title: The ID of the mobile client to bind this variant to
+      title: Mobile Client ID
       type: string
-    - name: type
+    - name: CLIENT_TYPE
       required: True
-      title: App target
+      title: Mobile Client Type
       type: enum
       default: "Android"
       enum: ["Android", "IOS"]

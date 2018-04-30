@@ -25,7 +25,7 @@
     fields:
       namespace: "{{ namespace }}"
       googleKey: "{{ googlekey }}"
-      appType: "{{ type }}"
+      appType: "{{ CLIENT_TYPE }}"
       clientId: "{{ CLIENT_ID }}"
   when: googlekey is defined
 
@@ -34,6 +34,6 @@
     fields:
       namespace: "{{ namespace }}"
       cert: "{{ cert }}"
-      appType: "{{ type }}"
+      appType: "{{ CLIENT_TYPE }}"
       clientId: "{{ CLIENT_ID }}"
   when: passphrase is defined
