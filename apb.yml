@@ -5,8 +5,9 @@ bindable: True
 async: optional
 tags: 
   - mobile-service
+  - mobile-client-enabled
 metadata:
-  displayName: AeroGear Unified Push Server (UPS)
+  displayName: Unified Push Server
   longDescription: "An APB deploying the AeroGear UnifiedPush Server with persistent storage and authentication through Openshift"
   imageUrl: "https://pbs.twimg.com/profile_images/1794440005/aerogear_icon-1_400x400.png"
   documentationUrl: "https://github.com/aerogearcatalog/unifiedpush-apb/blob/master/docs/modules/ups_openshift/index.asciidoc"
@@ -24,7 +25,7 @@ plans:
     metadata: {}
     parameters: []
     bind_parameters:
-    - name: clientId
+    - name: CLIENT_ID
       required: True
       title: The ID of the mobile client to bind this variant to
       type: string
