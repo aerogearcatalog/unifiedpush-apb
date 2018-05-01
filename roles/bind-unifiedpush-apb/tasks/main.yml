@@ -36,4 +36,5 @@
       cert: "{{ cert }}"
       appType: "{{ type }}"
       clientId: "{{ CLIENT_ID }}"
+      production: "{{ iosIsProduction }}"
   when: passphrase is defined

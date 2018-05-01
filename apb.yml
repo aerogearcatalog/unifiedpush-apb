@@ -49,7 +49,12 @@ plans:
       display_type: textarea
       display_group: iOS
     - name: passphrase
-      title: the passphrase
+      title: The passphrase
       type: string
       display_type: password
+      display_group: iOS
+    - name: iosIsProduction
+      title: Is this a production certificate?
+      type: boolean
+      display_type: checkbox
       display_group: iOS
