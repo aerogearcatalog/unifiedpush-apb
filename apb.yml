@@ -55,6 +55,7 @@ plans:
       display_group: iOS
     - name: iosIsProduction
       title: Is this a production certificate?
+      default: false
       type: boolean
       display_type: checkbox
       display_group: iOS
