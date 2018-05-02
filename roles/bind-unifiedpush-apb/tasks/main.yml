@@ -14,8 +14,27 @@
     dest: /tmp/secret.yaml
   when: passphrase is defined
 
-- name: "Create binding secret"
+- name: "Get the secrets that currently exist"
+  shell: "oc get secrets --selector='clientId={{ clientId }},serviceName=ups' -o jsonpath='{.items[0].data.config}'  -n {{ namespace }} | base64 --decode "
+  register: config
+  ignore_errors: yes
+
+- name: "Create empty json object to avoid failing on first binding"
+  set_fact:
+    config_json: "{}|from_json"
+
+- name: "Convert config to json format"
+  set_fact:
+    config_json: "{{ config.stdout|from_json }}"
+  ignore_errors: yes
+
+- name: "Create Android binding secret"
   shell: "oc create -f /tmp/secret.yaml -n {{ namespace }}"
+  when: config_json.android is undefined and googlekey is defined
+
+- name: "Create iOS binding secret"
+  shell: "oc create -f /tmp/secret.yaml -n {{ namespace }}"
+  when: config_json.ios is undefined and passphrase is defined
 
 - name: "Delete binding Secret Template File"
   file: path=/tmp/secret.yaml state=absent
@@ -27,7 +46,7 @@
       googleKey: "{{ googlekey }}"
       appType: "{{ CLIENT_TYPE }}"
       clientId: "{{ CLIENT_ID }}"
-  when: googlekey is defined
+  when: googlekey is defined and config_json.android is undefined
 
 - name: Store the iOS name of the binding secret to be used in unbind
   asb_encode_binding:
@@ -36,4 +55,35 @@
       cert: "{{ cert }}"
       appType: "{{ CLIENT_TYPE }}"
       clientId: "{{ CLIENT_ID }}"
+  when: passphrase is defined and config_json.ios is undefined
+
+- name: "Get the secrets that exist post-binding"
+  shell: "oc get secrets --selector='clientId={{ clientId }},serviceName=ups' -o jsonpath='{.items[0].data.config}'  -n {{ namespace }} | base64 --decode "
+  register: post_binding_config
+  ignore_errors: yes
   when: passphrase is defined
+
+- name: "Set iOS variant created to true"
+  set_fact:
+    ios_variant: true
+
+- name: "Create empty post-binding config json object to avoid failing if binding was unsuccessful"
+  set_fact:
+    post_binding_config_json: "{}|from_json"
+  when: passphrase is defined
+
+- name: "Convert post_binding_config to json format"
+  set_fact:
+    post_binding_config_json: "{{ post_binding_config.stdout|from_json }}"
+  ignore_errors: yes
+  when: passphrase is defined
+
+- name: "Set iOS variant to false if binding failed"
+  set_fact:
+    ios_variant: false
+  when: passphrase is defined and post_binding_config_json.ios is undefined 
+
+- fail:
+    msg: "The iOS binding was unsuccessful - Please check format of cert or passphrase"
+  when: passphrase is defined and not ios_variant
+  
