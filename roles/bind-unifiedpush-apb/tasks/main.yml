@@ -1,18 +1,29 @@
-- name: "generate variant reference id"
-  shell: head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo ''
-  register: variant_reference_id
-  
+# First check if not already a variant of the same type exists for this client
+# Only one variant per platform is allowed. we do this by querying the annotations
+# of the UPS secret.
+
+- name: "Fetch existing variants"
+  shell: "oc get secrets --namespace={{ namespace }} --selector='clientId={{ CLIENT_ID }},serviceName=ups' -o jsonpath='{.items[*].metadata.annotations.variant/{{ CLIENT_TYPE | lower }}}'"
+  register: existing_variant
+
+- name: "Abort early if a variant with the same client type already exists"
+  fail: msg="{{ CLIENT_ID  }} already has a variant of type {{ CLIENT_TYPE }}"
+  when: existing_variant is defined and existing_variant.stdout != ""
+
+# The check has passed, no variant for this type seems to exist. Continue with
+# the binding secrets
+
 - name: "Create ups secret yaml file"
   template:
     src: binding_secret_droid.yml.j2
     dest: /tmp/secret.yaml
-  when: googlekey is defined
+  when: CLIENT_TYPE == "Android"
 
 - name: "Create ups secret yaml file"
   template:
     src: binding_secret_ios.yml.j2
     dest: /tmp/secret.yaml
-  when: passphrase is defined
+  when: CLIENT_TYPE == "IOS"
 
 - name: "Create binding secret"
   shell: "oc create -f /tmp/secret.yaml -n {{ namespace }}"
@@ -27,7 +38,7 @@
       googleKey: "{{ googlekey }}"
       appType: "{{ CLIENT_TYPE }}"
       clientId: "{{ CLIENT_ID }}"
-  when: googlekey is defined
+  when: CLIENT_TYPE == "Android"
 
 - name: Store the iOS name of the binding secret to be used in unbind
   asb_encode_binding:
@@ -37,4 +48,15 @@
       appType: "{{ CLIENT_TYPE }}"
       clientId: "{{ CLIENT_ID }}"
       isProduction: "{{ iosIsProduction }}"
-  when: passphrase is defined
+  when: CLIENT_TYPE == "IOS"
+
+# After the binding secrets are created we want to ensure that the variants
+# also exist. We do this again by querying the annotations: if the annotations
+# have been updated it also means that the REST call to UPS was successful
+
+- name: "Try to fetch the newly created variant through its annotation"
+  shell: "oc get secrets --namespace={{ namespace }} --selector='clientId={{ CLIENT_ID }},serviceName=ups' -o jsonpath='{.items[*].metadata.annotations.variant/{{ CLIENT_TYPE | lower }}}'"
+  retries: 5
+  delay: 5
+  register: existing_variant
+  until: existing_variant != ""
