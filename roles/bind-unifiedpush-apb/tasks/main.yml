@@ -10,6 +10,16 @@
   fail: msg="{{ CLIENT_ID  }} already has a variant of type {{ CLIENT_TYPE }}"
   when: existing_variant is defined and existing_variant.stdout != ""
 
+# Store the name of the service instance. It's required for some purposes like adding
+# annotations to the mobile client
+
+- name: "Get the name of the service insance"
+  shell: oc get serviceinstance --namespace={{ namespace }} -o jsonpath='{.items[?(@.spec.externalID=="{{ _apb_service_instance_id }}")].metadata.name}'
+  register: serviceinstance_name
+
+- set_fact:
+    UPS_NAME: "{{ serviceinstance_name.stdout }}"
+
 # The check has passed, no variant for this type seems to exist. Continue with
 # the binding secrets
 
