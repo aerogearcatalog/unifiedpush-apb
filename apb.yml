@@ -22,7 +22,9 @@ plans:
   - name: default
     description: Persistent deployment of UPS
     free: True
-    metadata: {}
+    metadata:
+      mobileclient_bind_parameters_data:
+        - '{"name": "CLIENT_ID", "value": "metadata.name", "type": "path"}'
     parameters: []
     bind_parameters:
     - name: CLIENT_ID
