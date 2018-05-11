@@ -54,10 +54,14 @@ The user can now access the UPS route.
 
 When the UPS service is provisioned there is a route access to the UPS.
 When you access the route you will see the OAuth proxy landing screen.
+
 image::giving-access-to-ups/proxy.png[OAuth Proxy landing page]
+
 Click *Log in with Openshift* and log in. If you have sufficient permission to access the route
 you are prompted to allow the service account access your account.
+
 image::giving-access-to-ups/authorize.png[OAuth proxy service account authorize access]
+
 Click *Allow selected permissions*. The OAuth proxy redirects you to the requested route.
 
 
