@@ -25,7 +25,19 @@ plans:
     metadata:
       mobileclient_bind_parameters_data:
         - '{"name": "CLIENT_ID", "value": "metadata.name", "type": "path"}'
-    parameters: []
+    parameters: 
+    - name: SHARED_UPS
+      required: False
+      type: bool
+      title: Connect to an existing UPS 
+    - name: SHARED_HOST
+      required: False
+      type: string
+      title: URL of the shared UPS service
+    - name: SHARED_HOST_TOKEN
+      required: False
+      type: string
+      title: Auth token for the shared UPS service - Leave blank if not using shared UPS
     bind_parameters:
     - name: CLIENT_ID
       required: True

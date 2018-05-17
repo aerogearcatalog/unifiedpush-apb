@@ -107,6 +107,16 @@
     spec_tls_termination: edge
   register: ups_route
 
+- set_fact:
+    ups_route: "{{ ups_route.route.spec.host }}"
+
+- set_fact:
+    ups_route: "{{ SHARED_HOST }}"
+  when: SHARED_UPS | bool 
+
+- set_fact:
+    auth_token: "{{ SHARED_HOST_TOKEN | default(' ') }}"
+
 # We need to wait for the deployment to be ready before we can exit the ansible job
 - name: "Wait for all UPS containers to become ready"
   shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig={{ ups_deploymentconfig_name }}" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
