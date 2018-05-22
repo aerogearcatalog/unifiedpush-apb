@@ -1,0 +1,7 @@
+= Provisioning the Unified Push Service
+
+// tag::provisioning-push[]
+
+There are currently no items to configure when provisioning a Unified Push Service.
+
+// end::provisioning-push[]

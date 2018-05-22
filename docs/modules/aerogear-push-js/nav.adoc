@@ -1,0 +1,6 @@
+* xref:index.adoc[JavaScript]
+** xref:send-push.adoc[]
+** xref:simplepush-primer.adoc[]
+** xref:simplepush-server.adoc[]
+** xref:unifiedpush-server.adoc[]
+** xref:web-app.adoc[]

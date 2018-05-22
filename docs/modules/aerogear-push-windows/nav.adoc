@@ -1,0 +1,5 @@
+* xref:index.adoc[Windows]
+** xref:push-notification.adoc[]
+** xref:register-device.adoc[]
+** xref:windows-app.adoc[]
+** xref:windows-setup.adoc[]

@@ -1,3 +1,5 @@
 = AeroGear Push Mobile Service
 
+// tag::about-push[]
 Send push notifications to any device, regardless of mobile platform or network.
+// end::about-push[]
