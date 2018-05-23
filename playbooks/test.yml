@@ -28,6 +28,9 @@
   - name: Run the test-bind role.
     include_role:
       name: test-bind-unifiedpush-apb
+  - name: Run the test-unbind role.
+    include_role:
+      name: test-unbind-unifiedpush-apb
   - name: Run the deprovision role.
     include_role:
       name: deprovision-unifiedpush-apb
