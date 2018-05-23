@@ -1,0 +1,12 @@
+- name: "Check that new variant {{ CLIENT_ID }} was created in the application {{ pushApplicationID }}"
+  uri:
+    method: GET
+    url: "http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications/{{ pushApplicationID }}"
+    return_content: yes
+    validate_certs: no
+  register: applications
+  failed_when: applications.json.variants[0].name != CLIENT_ID
+
+# Save variantID for further use in the test
+- set_fact:
+    variantID: "{{ applications.json.variants[0].variantID }}"
