@@ -36,7 +36,7 @@
       googleKey: "{{ googlekey }}"
       appType: "{{ CLIENT_TYPE }}"
       clientId: "{{ CLIENT_ID }}"
-  when: CLIENT_TYPE == "Android"
+  when: CLIENT_TYPE == "Android" and APB_TEST is not defined
 
 - name: Store the iOS name of the binding secret to be used in unbind
   asb_encode_binding:
@@ -46,4 +46,4 @@
       appType: "{{ CLIENT_TYPE }}"
       clientId: "{{ CLIENT_ID }}"
       isProduction: "{{ iosIsProduction }}"
-  when: CLIENT_TYPE == "IOS"
+  when: CLIENT_TYPE == "IOS" and APB_TEST is not defined

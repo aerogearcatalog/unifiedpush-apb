@@ -20,3 +20,7 @@
     validate_certs: no
   register: applications
   failed_when: applications.json[0].name != "{{ namespace }}"
+
+  # Save pushApplicationID for further use in the test
+- set_fact:
+    pushApplicationID: "{{ applications.json[0].pushApplicationID }}"
