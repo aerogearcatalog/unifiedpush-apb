@@ -9,6 +9,7 @@
 
 Getting the UnifiedPush Server up and running with an on-premise application server is a four-step setup process:
 
+. <<quickstart, Quickstart Guide>>
 . <<getfiles,Get the UnifiedPush Server application files>>
 . <<gendbds,Generate the UnifiedPush database and datasource>>
 . <<schema,Create the database schema>>
@@ -35,6 +36,29 @@ export APPSRV_HOME=/path/to/SERVER_HOME
 [source,batch]
 ----
 set APPSRV_HOME=X:\path\to\SERVER_HOME
+----
+
+[[quickstart]]
+=== Quickstart Guide
+
+Build the project:
+[source,shell]
+----
+mvn clean install
+----
+
+This builds the latest UPS image which can be run with Keycloack or noauth. 
+
+To run the noauth image locally, use the following command:
+[source,shell]
+----
+docker run -p 18081:8080 -it aerogear/ups:plain
+----
+
+To run the image with Keycloak, use the following command:
+[source,shell]
+----
+docker run -p 18081:8080 -it aerogear/ups:kc
 ----
 
 [[getfiles]]
