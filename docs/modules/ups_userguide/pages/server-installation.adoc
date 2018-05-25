@@ -7,7 +7,7 @@
 [[server-installation]]
 == Install and Configure the UnifiedPush Server
 
-Getting the UnifiedPush Server up and running with an on-premise application server is a four-step setup process:
+Getting the UnifiedPush Server up and running with an application server is a four-step setup process. Alternitively, for a quick installation see the <<quickstart, Quickstart Guide>>
 
 . <<getfiles,Get the UnifiedPush Server application files>>
 . <<gendbds,Generate the UnifiedPush database and datasource>>
@@ -35,6 +35,29 @@ export APPSRV_HOME=/path/to/SERVER_HOME
 [source,batch]
 ----
 set APPSRV_HOME=X:\path\to\SERVER_HOME
+----
+
+[[quickstart]]
+=== Quickstart Guide
+
+Build the project:
+[source,shell]
+----
+mvn clean install
+----
+
+This builds and installs the push server to your local maven registry and also builds two docker images, plain (no authentication) and kc (includes Keycloak).
+
+To run the noauth image locally, use the following command:
+[source,shell]
+----
+docker run -p 18081:8080 -it aerogear/ups:plain
+----
+
+To run the image with Keycloak, use the following command:
+[source,shell]
+----
+docker run -p 18081:8080 -it aerogear/ups:kc
 ----
 
 [[getfiles]]
