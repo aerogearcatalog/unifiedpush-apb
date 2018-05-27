@@ -17,6 +17,10 @@ metadata:
     - "docker.io/centos/postgresql-96-centos7:9.6"
     - "docker.io/aerogear/ups-config-operator:master"
     - "docker.io/openshift/oauth-proxy:v1.1.0"
+  sdk-docs-android: "http://docs.aerogear.org"
+  sdk-docs-cordova: "http://docs.aerogear.org"
+  sdk-docs-ios: "http://docs.aerogear.org"
+  sdk-docs-xamarin: "http://docs.aerogear.org"
   serviceName: ups
 plans:
   - name: default
