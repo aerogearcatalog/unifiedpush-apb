@@ -34,6 +34,10 @@
           secret_key_ref:
             name: '{{ postgres_secret_name }}'
             key: database-name
+      - name: POSTGRES_SERVICE_HOST
+        value: "{{ postgres_service_name }}"
+      - name: POSTGRES_SERVICE_PORT
+        value: "5432"
       ports:
       - name: ups
         protocol: TCP
