@@ -4,7 +4,7 @@ proxy_serviceaccount_name: "oauth-proxy"
 postgres_deploymentconfig_name: "postgres"
 postgres_pvc_name: "postgres-pvc"
 postgres_secret_name: "postgres-secret"
-postgres_service_name: "postgres"
+postgres_service_name: "ups-postgres"
 
 ups_deploymentconfig_name: "ups"
 ups_proxy_service_name: "ups-proxy"
