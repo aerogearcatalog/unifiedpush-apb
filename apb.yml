@@ -17,10 +17,10 @@ metadata:
     - "docker.io/centos/postgresql-96-centos7:9.6"
     - "docker.io/aerogear/ups-config-operator:master"
     - "docker.io/openshift/oauth-proxy:v1.1.0"
-  sdk-docs-android: "http://docs.aerogear.org"
-  sdk-docs-cordova: "http://docs.aerogear.org"
-  sdk-docs-ios: "http://docs.aerogear.org"
-  sdk-docs-xamarin: "http://docs.aerogear.org"
+  sdk-docs-android: "https://docs.aerogear.org/android-sdk/latest/getting-started/push.html"
+  sdk-docs-cordova: "https://github.com/aerogearcatalog/unifiedpush-apb/blob/master/docs/modules/aerogear-push-cordova/troubleshooting.asciidoc"
+  sdk-docs-ios: "https://github.com/aerogearcatalog/unifiedpush-apb/blob/master/docs/modules/aerogear-push-ios/index.markdown"
+  sdk-docs-xamarin: "https://github.com/aerogearcatalog/unifiedpush-apb/blob/master/docs/modules/aerogear-push-windows/index.markdown"
   serviceName: ups
 plans:
   - name: default
