@@ -22,6 +22,7 @@ metadata:
   sdk-docs-ios: "https://github.com/aerogearcatalog/unifiedpush-apb/blob/master/docs/modules/aerogear-push-ios/index.markdown"
   sdk-docs-xamarin: "https://github.com/aerogearcatalog/unifiedpush-apb/blob/master/docs/modules/aerogear-push-windows/index.markdown"
   serviceName: ups
+  bindingsLimit: 2
 plans:
   - name: default
     description: Persistent deployment of UPS
