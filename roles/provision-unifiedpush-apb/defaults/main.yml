@@ -11,7 +11,7 @@ postgres_database_name: unifiedpush
 
 # Sidecar Image values
 ups_sidecar_image: "docker.io/aerogear/ups-config-operator"
-ups_sidecar_image_tag: "master"
+ups_sidecar_image_tag: "0.2.0"
 
 # OAuth Proxy values
 proxy_image: "docker.io/openshift/oauth-proxy"
