@@ -43,11 +43,11 @@ plans:
       default: "Android"
       enum: ["Android", "IOS"]
     - name: googlekey
-      title: Your Google Key for Firebase Cloud Messaging
+      title: Your Server Key for Firebase Cloud Messaging
       type: string
       display_group: Android
     - name: projectNumber
-      title: Your FCM Project Number, needed on the mobile client for connecting with FCM
+      title: Your Sender ID, needed to connecting to FCM
       type: string
       display_group: Android
     - name: cert
