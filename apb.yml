@@ -7,7 +7,7 @@ tags:
   - mobile-service
   - mobile-client-enabled
 metadata:
-  displayName: Unified Push Server
+  displayName: Push Notifications
   longDescription: "An APB deploying the AeroGear UnifiedPush Server with persistent storage and authentication through Openshift"
   imageUrl: "https://pbs.twimg.com/profile_images/1794440005/aerogear_icon-1_400x400.png"
   documentationUrl: "https://github.com/aerogearcatalog/unifiedpush-apb/blob/master/docs/modules/ups_openshift/index.asciidoc"
