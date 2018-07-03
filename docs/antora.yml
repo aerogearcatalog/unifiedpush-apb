@@ -7,9 +7,7 @@ nav:
 - modules/ups_userguide/nav.adoc
 # - modules/push-message-format/nav.adoc
 # - modules/aerogear-push-android/nav.adoc
-# - modules/aerogear-push-chrome/nav.adoc
 # - modules/aerogear-push-cordova/nav.adoc
 # - modules/aerogear-push-ios/nav.adoc
-# - modules/aerogear-push-js/nav.adoc
 # - modules/aerogear-push-windows/nav.adoc
 # - modules/client-registration/nav.adoc

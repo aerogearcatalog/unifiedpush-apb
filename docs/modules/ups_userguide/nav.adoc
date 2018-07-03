@@ -7,8 +7,6 @@
 
 ** xref:server-installation_advanced.adoc[Cluster and Docker]
 
-** xref:admin-ui.adoc[Using the Admin UI]
-
 ** xref:ups-debugging.adoc[Debugging the UnifiedPush Server]
 
 ** xref:integration.adoc[Integrating the UnifiedPush Server]
