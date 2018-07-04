@@ -10,7 +10,7 @@ metadata:
   displayName: Unified Push Server
   longDescription: "An APB deploying the AeroGear UnifiedPush Server with persistent storage and authentication through Openshift"
   imageUrl: "https://pbs.twimg.com/profile_images/1794440005/aerogear_icon-1_400x400.png"
-  documentationUrl: "https://github.com/aerogearcatalog/unifiedpush-apb/blob/master/docs/modules/ups_openshift/index.asciidoc"
+  documentationUrl: "https://docs.aerogear.org/external/apb/unifiedpush.html"
   providerDisplayName: "Red Hat, Inc."
   dependencies:
     - "docker.io/aerogear/unifiedpush-wildfly-plain:2.1.0"
