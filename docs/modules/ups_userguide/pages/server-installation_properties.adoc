@@ -4,6 +4,8 @@
 // section: guides
 // ---
 
+:network: <network>
+
 [[sysprops]]
 == UPS Configuration Properties
 

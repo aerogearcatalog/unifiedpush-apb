@@ -1,0 +1,10 @@
+The following step-by-step guides, gives you an introduction on how to
+use the AeroGear UnifiedPush Server for sending Push Notifications to
+your own Chrome Packaged Apps using the same Google Cloud Messaging(GCM)
+service that Android uses. You will need a Google account to use
+Google's services. So, let’s get started:
+
+1.  link:guides/#google-setup[Google-Related Setup]
+2.  link:guides/#register-device[The AeroGear UnifiedPush Server]
+3.  link:guides/#chrome-app[Your first Chrome Packaged/Push App]
+4.  link:guides/#push-notification[Finally: Send a Push Notification]
