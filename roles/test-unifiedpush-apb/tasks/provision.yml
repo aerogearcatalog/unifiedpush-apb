@@ -1,4 +1,4 @@
-- name: Check that the unifiedpush login webpage is accessible
+- name: "Test|Check that the unifiedpush login webpage is accessible"
   uri:
     url: "{{ ups_protocol }}://{{ ups_route.route.spec.host }}"
     return_content: yes
@@ -12,7 +12,7 @@
   until: '"Log in with OpenShift" in webpage.content'
 
 # Use http here becaues it's not calling the external route
-- name: "Check that new application was created for the namespace {{ namespace }}"
+- name: "Test|Check that new application was created for the namespace {{ namespace }}"
   uri:
     method: GET
     url: "http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications"
@@ -21,6 +21,6 @@
   register: applications
   failed_when: applications.json[0].name != "{{ namespace }}"
 
-  # Save pushApplicationID for further use in the test
-- set_fact:
+- name: "Test|Save pushApplicationID for further use"
+  set_fact:
     pushApplicationID: "{{ applications.json[0].pushApplicationID }}"

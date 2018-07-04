@@ -1,4 +1,4 @@
-- name: "Delete the variant {{ variantID }} from the application {{ pushApplicationID }}"
+- name: "Test|Delete the variant {{ variantID }} from the application {{ pushApplicationID }}"
   uri:
     method: DELETE
     url: "http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications/{{ pushApplicationID }}/android/{{ variantID }}"
@@ -7,7 +7,7 @@
   register: response
   failed_when: response.status != 204
 
-- name: "Check that there are no variants present in the application now"
+- name: "Test|Check that there are no variants present in the application now"
   uri:
     method: GET
     url: "http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications/{{ pushApplicationID }}"
