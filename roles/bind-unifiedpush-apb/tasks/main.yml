@@ -1,9 +1,14 @@
 # Store the name of the service instance. It's required for some purposes like adding
 # annotations to the mobile client
 
-- name: "Get the name of the service insance"
+- name: "Get the name of the service instance"
   shell: oc get serviceinstance --namespace={{ namespace }} -o jsonpath='{.items[?(@.spec.externalID=="{{ _apb_service_instance_id }}")].metadata.name}'
   register: serviceinstance_name
+
+- name: "Ensure compatibility with older ASB versions"
+  set_fact:
+    _apb_service_binding_id: "DUMMY"
+  when: _apb_service_binding_id is not defined
 
 - set_fact:
     UPS_NAME: "{{ serviceinstance_name.stdout }}"
