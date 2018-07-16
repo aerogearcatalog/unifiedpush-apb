@@ -118,7 +118,7 @@
   until: ups_result.stdout.find("3") != -1
   retries: 30
   delay: 5
-
+  
 - name: "Create {{ namespace }} PushApplication on service host {{ unifiedpush_service.service.spec.cluster_ip }}"
   uri:
     url: "http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications"
@@ -127,7 +127,7 @@
     validate_certs: no
     body_format: json
     status_code: 201
-  retries: 5
+  retries: 30
   until: namespace_push_app.status == 201
   delay: 5
   register: namespace_push_app
