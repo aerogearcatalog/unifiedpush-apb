@@ -10,8 +10,13 @@
     _apb_service_binding_id: "DUMMY"
   when: _apb_service_binding_id is not defined
 
+- name: Generate client id
+  shell: tr -d -c "a-zA-Z0-9" < /dev/urandom | head -c 20
+  register: generated_client_id
+
 - set_fact:
     UPS_NAME: "{{ serviceinstance_name.stdout }}"
+    GENERATED_CLIENT_ID: "{{ generated_client_id.stdout }}"
 
 # The check has passed, no variant for this type seems to exist. Continue with
 # the binding secrets
