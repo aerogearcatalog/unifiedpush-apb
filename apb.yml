@@ -29,7 +29,7 @@ plans:
     free: True
     metadata:
       mobileclient_bind_parameters_data:
-        - '{"name": "CLIENT_ID", "value": "metadata.name", "type": "path"}'
+        - '{"name": "CLIENT_ID", "value": "metadata.name", "type": "path", "filterDisplayGroupBy":"CLIENT_TYPE"}'
     parameters: []
     bind_parameters:
     - name: CLIENT_ID
