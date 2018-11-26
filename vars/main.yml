@@ -12,3 +12,5 @@ ups_route_name: "ups"
 ups_secret_name: "unified-push-server"
 ups_service_name: "ups"
 ups_protocol: https
+
+encode_asb_binding: true

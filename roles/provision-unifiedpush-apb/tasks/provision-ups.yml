@@ -132,11 +132,15 @@
   delay: 5
   register: namespace_push_app
 
+- set_fact:
+    upsConsoleUrl: "https://{{ ups_route.route.spec.host }}"
+
 # This is currently needed until https://github.com/openshift/ansible-service-broker/issues/847 is resolved
 - name: Make the data available to be used in the binding
   asb_encode_binding:
     fields:
-      NAMESPACE: "{{ namespace }}"
+      namespace: "{{ namespace }}"
+      upsConsoleUrl: "{{ upsConsoleUrl }}"
 
 - name: "Create ups secret yaml file"
   template:

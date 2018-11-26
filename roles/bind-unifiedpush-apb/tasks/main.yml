@@ -39,6 +39,23 @@
 - name: "Delete binding Secret Template File"
   file: path=/tmp/secret.yaml state=absent
 
+# Annotate the mobile client
+- name: Get ups service instance name
+  shell: oc get serviceinstances -n {{ namespace }} -o json | jq '.items[] | select(.spec.externalID=="{{ _apb_service_instance_id }}") | .metadata.name'  | cut -f2 -d'"'
+  register: ups_si_name
+
+- set_fact:
+    upsInstanceName: "{{ ups_si_name.stdout }}"
+
+- set_fact:
+    upsUrlAnnotation: "org.aerogear.binding.{{ upsInstanceName }}/ups_url"
+ 
+- name: Annotate client {{ CLIENT_ID }}
+  shell: 'oc annotate mobileclient {{ CLIENT_ID }} {{ item }} --overwrite=true -n {{ namespace }}'
+  ignore_errors: yes
+  with_items:
+    - "{{ upsUrlAnnotation }}='{\"label\": \"UPS Admin Console URL\", \"value\": \"{{ _apb_provision_creds.upsConsoleUrl }}\", \"type\": \"href\"}'"
+
 - name: Store the Android name of the binding secret to be used in unbind
   asb_encode_binding:
     fields:
@@ -46,6 +63,7 @@
       googleKey: "{{ googlekey }}"
       appType: "{{ CLIENT_TYPE }}"
       clientId: "{{ CLIENT_ID }}"
+      upsInstanceName: "{{ upsInstanceName }}"
   when: CLIENT_TYPE == "Android" and APB_TEST is not defined
 
 - name: Store the iOS name of the binding secret to be used in unbind
@@ -56,4 +74,14 @@
       appType: "{{ CLIENT_TYPE }}"
       clientId: "{{ CLIENT_ID }}"
       isProduction: "{{ iosIsProduction }}"
+      upsInstanceName: "{{ upsInstanceName }}"
   when: CLIENT_TYPE == "IOS" and APB_TEST is not defined
+
+- name: Populate {{ CLIENT_ID }} APB bind credentials
+  set_fact:
+    _apb_bind_creds: "{{ _apb_bind_creds|default({}) | combine( {item.name: item.value} ) }}"
+  with_items:
+    - { name: clientId, value: '{{ CLIENT_ID }}' }
+    - { name: upsInstanceName, value: '{{ upsInstanceName }}' }
+  when: not encode_asb_binding
+  no_log: yes

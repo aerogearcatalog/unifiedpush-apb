@@ -5,3 +5,4 @@ googlekey: "test"
 projectNumber: "1234"
 _apb_service_instance_id: 'dummy_service_instance_id'
 _apb_service_binding_id: 'dummy_service_binding_id'
+encode_asb_binding: false

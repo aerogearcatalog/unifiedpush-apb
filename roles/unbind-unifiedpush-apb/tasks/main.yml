@@ -1,2 +1,12 @@
+# Remove annotation from mobile client 
+- set_fact:
+    upsUrlAnnotation: "org.aerogear.binding.{{ _apb_bind_creds.upsInstanceName }}/ups_url"
+
+- name: Remove annotations from client {{ _apb_bind_creds.clientId }}
+  shell: "oc annotate mobileclient {{ _apb_bind_creds.clientId }} {{ item }}- -n {{ namespace }}"
+  ignore_errors: yes
+  with_items:
+    - "{{ upsUrlAnnotation }}"
+
 - debug:
-    msg: "Currently unused (handled by ups-config-operator)"
+    msg: "The rest of unbind steps is handled by ups-config-operator"
