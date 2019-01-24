@@ -3,7 +3,7 @@ name: unifiedpush-apb
 description: AeroGear UnifiedPush Server
 bindable: True
 async: optional
-tags: 
+tags:
   - mobile-service
   - mobile-client-enabled
 metadata:
@@ -12,11 +12,6 @@ metadata:
   imageUrl: "https://pbs.twimg.com/profile_images/1794440005/aerogear_icon-1_400x400.png"
   documentationUrl: "https://docs.aerogear.org/external/apb/unifiedpush.html"
   providerDisplayName: "Red Hat, Inc."
-  dependencies:
-    - "docker.io/aerogear/unifiedpush-wildfly-plain:2.1.0"
-    - "docker.io/centos/postgresql-96-centos7:9.6"
-    - "docker.io/aerogear/ups-config-operator:master"
-    - "docker.io/openshift/oauth-proxy:v1.1.0"
   sdk-docs-android: "https://docs.aerogear.org/external/apb/push/android.html"
   sdk-docs-cordova: "https://docs.aerogear.org/external/apb/push/cordova.html"
   sdk-docs-ios: "https://docs.aerogear.org/external/apb/push/ios.html"

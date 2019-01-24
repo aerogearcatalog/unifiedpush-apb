@@ -1,6 +1,7 @@
-FROM ansibleplaybookbundle/apb-base
+FROM openshift3/apb-base:v3.11
 
-LABEL "com.redhat.apb.spec"=\
+LABEL com.redhat.component="mobile-unifiedpush-server-apb" \
+      com.redhat.apb.spec=\
 "dmVyc2lvbjogMS4wCm5hbWU6IHVuaWZpZWRwdXNoLWFwYgpkZXNjcmlwdGlvbjogQWVyb0dlYXIg\
 VW5pZmllZFB1c2ggU2VydmVyCmJpbmRhYmxlOiBUcnVlCmFzeW5jOiBvcHRpb25hbAp0YWdzOgog\
 IC0gbW9iaWxlLXNlcnZpY2UKICAtIG1vYmlsZS1jbGllbnQtZW5hYmxlZAptZXRhZGF0YToKICBk\
@@ -38,8 +39,15 @@ IHBhc3NwaHJhc2UKICAgICAgdHlwZTogc3RyaW5nCiAgICAgIGRpc3BsYXlfdHlwZTogcGFzc3dv\
 cmQKICAgICAgZGlzcGxheV9ncm91cDogaU9TCiAgICAtIG5hbWU6IGlvc0lzUHJvZHVjdGlvbgog\
 ICAgICB0aXRsZTogSXMgdGhpcyBhIHByb2R1Y3Rpb24gY2VydGlmaWNhdGU/CiAgICAgIGRlZmF1\
 bHQ6IGZhbHNlCiAgICAgIHR5cGU6IGJvb2xlYW4KICAgICAgZGlzcGxheV90eXBlOiBjaGVja2Jv\
-eAogICAgICBkaXNwbGF5X2dyb3VwOiBpT1MK"
-
+eAogICAgICBkaXNwbGF5X2dyb3VwOiBpT1MK" \
+      name="mobile/mobile-unifiedpush-server-apb" \
+      io.k8s.display-name="Mobile UnifiedPush Server APB" \
+      io.k8s.description="An APB (Ansible Playbook Bundle) that deploys the UnifiedPush Server on OpenShift through the service catalog" \
+      description="An APB (Ansible Playbook Bundle) that deploys the UnifiedPush Server on OpenShift through the service catalog" \
+      summary="An APB (Ansible Playbook Bundle) that deploys the UnifiedPush Server on OpenShift through the service catalog" \
+      usage="This image is used by the Automation Broker in OpenShift to provision the Unified Push Server" \
+      maintainer="Red Hat Mobile team" \
+      version="1.0.1"
 
 COPY playbooks /opt/apb/actions
 COPY roles /opt/ansible/roles
