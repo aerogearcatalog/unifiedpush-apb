@@ -49,6 +49,7 @@ eAogICAgICBkaXNwbGF5X2dyb3VwOiBpT1MK" \
       maintainer="Red Hat Mobile team" \
       version="1.0.1"
 
+COPY playbooks /opt/apb/project
 COPY playbooks /opt/apb/actions
 COPY roles /opt/ansible/roles
 COPY vars /opt/ansible/vars

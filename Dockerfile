@@ -40,7 +40,7 @@ ICAgICB0aXRsZTogSXMgdGhpcyBhIHByb2R1Y3Rpb24gY2VydGlmaWNhdGU/CiAgICAgIGRlZmF1\
 bHQ6IGZhbHNlCiAgICAgIHR5cGU6IGJvb2xlYW4KICAgICAgZGlzcGxheV90eXBlOiBjaGVja2Jv\
 eAogICAgICBkaXNwbGF5X2dyb3VwOiBpT1MK"
 
-
+COPY playbooks /opt/apb/project
 COPY playbooks /opt/apb/actions
 COPY roles /opt/ansible/roles
 COPY vars /opt/ansible/vars
