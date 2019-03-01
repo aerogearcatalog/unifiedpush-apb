@@ -1,6 +1,6 @@
 # UPS Values
 ups_image: " docker.io/aerogear/unifiedpush-wildfly-plain"
-ups_image_tag: "2.1.1"
+ups_image_tag: "2.1.1.Final"
 ups_port: 8080
 ups_proxy_port: 4180
 
