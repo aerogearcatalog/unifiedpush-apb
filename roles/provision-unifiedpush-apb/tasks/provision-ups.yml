@@ -42,6 +42,12 @@
       - name: ups
         protocol: TCP
         container_port: 8080
+      readinessProbe:
+        httpGet:
+          path: '/rest/applications'
+          port: 8080
+        initialDelaySeconds: 15
+        timeoutSeconds: 2
     - name: ups-oauth-proxy
       image: '{{ proxy_image }}:{{ proxy_image_tag }}'
       imagePullPolicy: IfNotPresent
@@ -127,9 +133,6 @@
     validate_certs: no
     body_format: json
     status_code: 201
-  retries: 30
-  until: namespace_push_app.status == 201
-  delay: 5
   register: namespace_push_app
 
 # This is currently needed until https://github.com/openshift/ansible-service-broker/issues/847 is resolved
