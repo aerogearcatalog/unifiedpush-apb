@@ -167,14 +167,14 @@ cGxheV9ncm91cDogaU9TCiAgICAtIG5hbWU6IGlvc0lzUHJvZHVjdGlvbgogICAgICB0aXRsZTog\
 SXMgdGhpcyBhIHByb2R1Y3Rpb24gY2VydGlmaWNhdGU/CiAgICAgIGRlZmF1bHQ6IGZhbHNlCiAg\
 ICAgIHR5cGU6IGJvb2xlYW4KICAgICAgZGlzcGxheV90eXBlOiBjaGVja2JveAogICAgICBkaXNw\
 bGF5X2dyb3VwOiBpT1MK" \
-      name="mobile/mobile-unifiedpush-server-apb" \
+      name="mobile-1-tech-preview/mobile-unifiedpush-server-apb" \
       io.k8s.display-name="Mobile UnifiedPush Server APB" \
       io.k8s.description="An APB (Ansible Playbook Bundle) that deploys the UnifiedPush Server on OpenShift through the service catalog" \
       description="An APB (Ansible Playbook Bundle) that deploys the UnifiedPush Server on OpenShift through the service catalog" \
       summary="An APB (Ansible Playbook Bundle) that deploys the UnifiedPush Server on OpenShift through the service catalog" \
       usage="This image is used by the Automation Broker in OpenShift to provision the Unified Push Server" \
       maintainer="Red Hat Mobile team" \
-      version="1.0.1"
+      version="1.0.2"
 
 COPY playbooks /opt/apb/project
 COPY playbooks /opt/apb/actions
