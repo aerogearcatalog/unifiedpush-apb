@@ -17,7 +17,7 @@
     spec_template_spec_service_account_name: '{{ proxy_serviceaccount_name }}'
     containers:
     - name: ups
-      image: '{{ ups_image }}:{{ ups_image_tag }}'
+      image: '{{ ups_image }}'
       env:
       - name: POSTGRES_USER
         value_from:
@@ -49,7 +49,7 @@
         initialDelaySeconds: 15
         timeoutSeconds: 2
     - name: ups-oauth-proxy
-      image: '{{ proxy_image }}:{{ proxy_image_tag }}'
+      image: '{{ proxy_image }}'
       imagePullPolicy: IfNotPresent
       ports:
       - containerPort: '{{ ups_proxy_port }}'
@@ -65,7 +65,7 @@
       - --https-address=
       - --cookie-secret=SECRET
     - name: ups-sync-service
-      image: '{{ ups_sidecar_image }}:{{ ups_sidecar_image_tag }}'
+      image: '{{ ups_sidecar_image }}'
       imagePullPolicy: IfNotPresent
       env:
       - name: NAMESPACE
@@ -124,7 +124,7 @@
   until: ups_result.stdout.find("3") != -1
   retries: 30
   delay: 5
-  
+
 - name: "Create {{ namespace }} PushApplication on service host {{ unifiedpush_service.service.spec.cluster_ip }}"
   uri:
     url: "http://{{ unifiedpush_service.service.spec.cluster_ip }}/rest/applications"

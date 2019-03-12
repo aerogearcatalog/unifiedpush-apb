@@ -20,12 +20,80 @@ metadata:
   bindingsLimit: 2
 plans:
   - name: default
-    description: Persistent deployment of UPS
+    description: This plan should be used in most use cases
     free: True
     metadata:
+      displayName: Default
       mobileclient_bind_parameters_data:
         - '{"name": "CLIENT_ID", "value": "metadata.name", "type": "path", "filterDisplayGroupBy":"CLIENT_TYPE"}'
     parameters: []
+    bind_parameters:
+    - name: CLIENT_ID
+      required: True
+      title: Mobile Client ID
+      type: string
+    - name: CLIENT_TYPE
+      required: True
+      title: Mobile Client Type
+      type: enum
+      default: "Android"
+      enum: ["Android", "IOS"]
+    - name: googlekey
+      title: Your Server Key for Firebase Cloud Messaging
+      type: string
+      display_group: Android
+    - name: projectNumber
+      title: Your Sender ID, needed to connecting to FCM
+      type: string
+      display_group: Android
+    - name: cert
+      title: iOS .p12 file (encode contents in base64 before pasting)
+      type: string
+      display_type: textarea
+      display_group: iOS
+    - name: passphrase
+      title: The passphrase
+      type: string
+      display_type: password
+      display_group: iOS
+    - name: iosIsProduction
+      title: Is this a production certificate?
+      default: false
+      type: boolean
+      display_type: checkbox
+      display_group: iOS
+  - name: custom
+    description: This plan can be used if images need to be customized
+    free: True
+    metadata:
+      displayName: User Specified
+      mobileclient_bind_parameters_data:
+        - '{"name": "CLIENT_ID", "value": "metadata.name", "type": "path", "filterDisplayGroupBy":"CLIENT_TYPE"}'
+    parameters:
+    - name: custom_ups_image
+      title: UnifiedPush Server container image
+      description: The image to use for the UnifiedPush Server (You shouldn't need to change this)
+      default: docker.io/aerogear/unifiedpush-wildfly-plain:2.1.1.Final
+      type: string
+      required: True
+    - name: custom_ups_sidecar_image
+      title: UnifiedPush Server Config Operator container image
+      description: The image to use for the UPS Config Operator (You shouldn't need to change this)
+      default: docker.io/aerogear/ups-config-operator:0.2.2
+      type: string
+      required: True
+    - name: custom_postgres_image
+      title: PostgreSQL container image
+      description: The image to use for the PostgreSQL database server (You shouldn't need to change this)
+      default: docker.io/centos/postgresql-96-centos7:9.6
+      type: string
+      required: True
+    - name: custom_proxy_image
+      title: OpenShift OAuth Proxy container image
+      description: The image to use for the OAuth Proxy (You shouldn't need to change this)
+      default: docker.io/openshift/oauth-proxy:v1.1.0
+      type: string
+      required: True
     bind_parameters:
     - name: CLIENT_ID
       required: True
