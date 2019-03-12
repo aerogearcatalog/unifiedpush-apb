@@ -1,19 +1,19 @@
 # UPS Values
-ups_image: " docker.io/aerogear/unifiedpush-wildfly-plain"
-ups_image_tag: "2.1.1.Final"
+default_ups_image: docker.io/aerogear/unifiedpush-wildfly-plain:2.1.1.Final
+ups_image: '{{ custom_ups_image | default(default_ups_image, true) }}'
 
 ups_port: 8080
 ups_proxy_port: 4180
 
 # Non global constants
-postgres_image: docker.io/centos/postgresql-96-centos7
-postgres_image_tag: '9.6'
+default_postgres_image: docker.io/centos/postgresql-96-centos7:9.6
+postgres_image: '{{ custom_postgres_image | default(default_postgres_image, true) }}'
 postgres_database_name: unifiedpush
 
 # Sidecar Image values
-ups_sidecar_image: "docker.io/aerogear/ups-config-operator"
-ups_sidecar_image_tag: "0.2.2"
+default_ups_sidecar_image: docker.io/aerogear/ups-config-operator:0.2.2
+ups_sidecar_image: '{{ custom_ups_sidecar_image | default(default_ups_sidecar_image, true) }}'
 
 # OAuth Proxy values
-proxy_image: "docker.io/openshift/oauth-proxy"
-proxy_image_tag: "v1.1.0"
+default_proxy_image: docker.io/openshift/oauth-proxy:v1.1.0
+proxy_image: '{{ custom_proxy_image | default(default_proxy_image, true) }}'
