@@ -5,6 +5,9 @@ postgres_deploymentconfig_name: "postgres"
 postgres_pvc_name: "postgres-pvc"
 postgres_secret_name: "postgres-secret"
 postgres_service_name: "ups-postgres"
+postgres_strategy_type: "Recreate"
+postgres_strategy_active_deadline_seconds: 21600
+postgres_strategy_recreate_timeout: 600
 
 ups_deploymentconfig_name: "ups"
 ups_proxy_service_name: "ups-proxy"
