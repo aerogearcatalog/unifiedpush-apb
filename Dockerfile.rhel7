@@ -217,7 +217,7 @@ eXBlOiBjaGVja2JveAogICAgICBkaXNwbGF5X2dyb3VwOiBpT1MK" \
       summary="An APB (Ansible Playbook Bundle) that deploys the UnifiedPush Server on OpenShift through the service catalog" \
       usage="This image is used by the Automation Broker in OpenShift to provision the Unified Push Server" \
       maintainer="Red Hat Mobile team" \
-      version="1.0.2"
+      version="1.0.3"
 
 COPY playbooks /opt/apb/project
 COPY playbooks /opt/apb/actions
