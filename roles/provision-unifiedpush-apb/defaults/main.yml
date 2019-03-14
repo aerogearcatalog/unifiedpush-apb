@@ -1,5 +1,5 @@
 # UPS Values
-default_ups_image: docker.io/aerogear/unifiedpush-wildfly-plain:2.1.1.Final
+default_ups_image: docker.io/aerogear/unifiedpush-wildfly-plain:2.2.1.Final
 ups_image: '{{ custom_ups_image | default(default_ups_image, true) }}'
 
 ups_port: 8080
@@ -11,7 +11,7 @@ postgres_image: '{{ custom_postgres_image | default(default_postgres_image, true
 postgres_database_name: unifiedpush
 
 # Sidecar Image values
-default_ups_sidecar_image: docker.io/aerogear/ups-config-operator:0.2.2
+default_ups_sidecar_image: docker.io/aerogear/ups-config-operator:0.2.3
 ups_sidecar_image: '{{ custom_ups_sidecar_image | default(default_ups_sidecar_image, true) }}'
 
 # OAuth Proxy values

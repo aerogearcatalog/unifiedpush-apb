@@ -73,13 +73,13 @@ plans:
     - name: custom_ups_image
       title: UnifiedPush Server container image
       description: The image to use for the UnifiedPush Server (You shouldn't need to change this)
-      default: docker.io/aerogear/unifiedpush-wildfly-plain:2.1.1.Final
+      default: docker.io/aerogear/unifiedpush-wildfly-plain:2.2.1.Final
       type: string
       required: True
     - name: custom_ups_sidecar_image
       title: UnifiedPush Server Config Operator container image
       description: The image to use for the UPS Config Operator (You shouldn't need to change this)
-      default: docker.io/aerogear/ups-config-operator:0.2.2
+      default: docker.io/aerogear/ups-config-operator:0.2.3
       type: string
       required: True
     - name: custom_postgres_image
