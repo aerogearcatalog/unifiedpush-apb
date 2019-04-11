@@ -55,6 +55,7 @@
     containers:
     - name: postgresql
       image: '{{ postgres_image }}'
+      imagePullPolicy: Always
       ports:
       - container_port: 5432
         protocol: TCP
