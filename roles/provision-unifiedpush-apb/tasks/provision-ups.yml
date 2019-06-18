@@ -49,6 +49,12 @@
           port: 8080
         initialDelaySeconds: 15
         timeoutSeconds: 2
+      livenessProbe:
+        httpGet:
+          path: '/rest/applications'
+          port: 8080
+        initialDelaySeconds: 60
+        timeoutSeconds: 2
     - name: ups-oauth-proxy
       image: '{{ proxy_image }}'
       imagePullPolicy: Always
