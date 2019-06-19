@@ -140,7 +140,7 @@
   shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig={{ ups_deploymentconfig_name }}" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
   register: ups_result
   until: ups_result.stdout.find("3") != -1
-  retries: 30
+  retries: 60
   delay: 5
 
 - name: "Create {{ namespace }} PushApplication on service host {{ unifiedpush_service.service.spec.cluster_ip }}"
