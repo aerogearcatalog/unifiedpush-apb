@@ -15,6 +15,17 @@
       app: ups
       service: ups
     spec_template_spec_service_account_name: '{{ proxy_serviceaccount_name }}'
+    spec_template_spec_init_containers:
+    - name: wait-for-postgresql
+      image: '{{ postgres_image }}'
+      imagePullPolicy: Always
+      env:
+        - name: POSTGRES_SERVICE_HOST
+          value: "{{ postgres_service_name }}"
+      command:
+        - "/bin/sh"
+        - "-c"
+        - "source /opt/rh/rh-postgresql96/enable && until pg_isready -h $POSTGRES_SERVICE_HOST; do echo waiting for database; sleep 2; done;"
     containers:
     - name: ups
       image: '{{ ups_image }}'
@@ -48,6 +59,12 @@
           path: '/rest/applications'
           port: 8080
         initialDelaySeconds: 15
+        timeoutSeconds: 2
+      livenessProbe:
+        httpGet:
+          path: '/rest/applications'
+          port: 8080
+        initialDelaySeconds: 60
         timeoutSeconds: 2
     - name: ups-oauth-proxy
       image: '{{ proxy_image }}'
@@ -123,7 +140,7 @@
   shell: oc get pods --namespace={{ namespace }} --selector="deploymentconfig={{ ups_deploymentconfig_name }}" -o jsonpath='{.items[*].status.containerStatuses[?(@.ready==true)].ready}'| wc -w
   register: ups_result
   until: ups_result.stdout.find("3") != -1
-  retries: 30
+  retries: 60
   delay: 5
 
 - name: "Create {{ namespace }} PushApplication on service host {{ unifiedpush_service.service.spec.cluster_ip }}"
